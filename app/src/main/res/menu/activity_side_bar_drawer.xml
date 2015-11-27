@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_Home" android:icon="@android:drawable/ic_menu_gallery"
+            android:title="HOME" />
+        <item android:id="@+id/nav_All" android:icon="@android:drawable/ic_menu_gallery"
+            android:title="All News" />
+        <item android:id="@+id/nav_Near" android:icon="@android:drawable/ic_menu_mylocation"
+            android:title="News Near Me" />
+
+    </group>
+
+    <item android:title="Category">
+        <menu>
+            <item android:id="@+id/nav_Politics" android:icon="@android:drawable/ic_menu_send"
+                android:title="Politics" />
+            <item android:id="@+id/nav_Business" android:icon="@android:drawable/ic_menu_send"
+                android:title="Business" />
+            <item android:id="@+id/nav_SocCul" android:icon="@android:drawable/ic_menu_send"
+                android:title="Society and Culture" />
+            <item android:id="@+id/nav_SciTech" android:icon="@android:drawable/ic_menu_send"
+                android:title="Science and Technology" />
+            <item android:id="@+id/nav_Sport" android:icon="@android:drawable/ic_menu_send"
+                android:title="Sport" />
+        </menu>
+    </item>
+
+</menu>
