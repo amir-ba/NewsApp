@@ -9,4 +9,12 @@
         android:text="Main Fragment"
         android:id="@+id/textView2"
         android:layout_gravity="center" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal|bottom"
+         android:id="@+id/maplayout">
+
+    </RelativeLayout>
 </FrameLayout>

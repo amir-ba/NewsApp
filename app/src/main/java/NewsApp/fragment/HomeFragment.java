@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.s1908114.newsapp.R;
+ import com.example.s1908114.newsapp.R;
+import com.google.android.gms.maps.MapFragment;
 
 /**
  * Created by s1908114 on 27.11.2015.
@@ -15,6 +15,7 @@ import com.example.s1908114.newsapp.R;
 public class HomeFragment extends Fragment {
     @Nullable
     @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_home,container,false);

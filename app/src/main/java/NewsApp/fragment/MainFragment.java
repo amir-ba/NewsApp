@@ -11,8 +11,7 @@ import com.example.s1908114.newsapp.R;
  * Created by s1908114 on 27.11.2015.
  */
 public class MainFragment extends Fragment {
-    @Nullable
-    @Override
+     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_main,container,false);

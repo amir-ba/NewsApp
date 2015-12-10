@@ -1,6 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".SideBar">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <!--s<item android:id="@+id/action_settings" android:title="@string/action_mapview"
+    android:orderInCategory="100" app:showAsAction="never" />
+    -->
+    <item android:id="@+id/action_mapview" android:title="@string/action_mapview"
+        android:icon="@mipmap/ic_map"
+        android:orderInCategory="100" app:showAsAction="always" />
+    <item android:id="@+id/action_listviewview" android:title="@string/action_listview"
+        android:icon="@mipmap/ic_list"
+        android:orderInCategory="100" app:showAsAction="always" />
 </menu>

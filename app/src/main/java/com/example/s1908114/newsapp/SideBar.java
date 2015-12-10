@@ -1,10 +1,8 @@
 package com.example.s1908114.newsapp;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,26 +14,30 @@ import android.view.MenuItem;
 
 import NewsApp.fragment.HomeFragment;
 import NewsApp.fragment.MainFragment;
+import NewsApp.fragment.LocationFragment;
 
 public class SideBar extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_side_bar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+       setSupportActionBar(toolbar);
+/*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+       fab.setOnClickListener(new View.OnClickListener() {
+        @Override
+       public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
-
+*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -76,8 +78,15 @@ public class SideBar extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+      //  if (id == R.id.action_settings) {
+        //    return true;
+        //}
+        switch (id){
+            case R.id.action_mapview:
+            startActivity(new Intent(this,HomeFragment.class));
             return true;
+
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -94,12 +103,11 @@ public class SideBar extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_Home) {
-            fn.beginTransaction().replace(R.id.content_frame,new HomeFragment()).commit();
+            fn.beginTransaction().replace(R.id.content_frame,new MainFragment()).commit();
 
+        }   else if (id == R.id.nav_Near) {
+            fn.beginTransaction().replace(R.id.content_frame,new LocationFragment()).commit();
 
-        } else if (id == R.id.nav_All) {
-
-        } else if (id == R.id.nav_Near) {
 
         } else if (id == R.id.nav_Politics) {
 
