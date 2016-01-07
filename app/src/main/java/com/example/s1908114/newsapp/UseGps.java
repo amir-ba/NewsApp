@@ -51,8 +51,8 @@ public class UseGps extends Activity implements LocationListener {
 
 
         public void updateUI(double lat, double lon){
-            latitudeField= (TextView) findViewById(R.id.textView01);
-            latitudeField.setText("Latitude: " + lat);
+       //     latitudeField= (TextView) findViewById(R.id.textView01);
+       //     latitudeField.setText("Latitude: " + lat);
             GoogleMap map =((MapFragment) getFragmentManager()
                     .findFragmentById(R.id.map)).getMap();
             MarkerOptions marker = new MarkerOptions().position(new LatLng(lat, lon));
