@@ -19,14 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.s1908114.newsapp.SideBar"
+            android:name=".SideBar"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
-
         </activity>
-
         <activity android:name="parallaxscrollexample.SingleParallaxScrollView" >
-
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -40,14 +37,16 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name="com.example.s1908114.newsapp.Splash" >
+        <activity android:name=".Splash" >
+
+        </activity>
+        <activity android:name=".NewsListView" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
