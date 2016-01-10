@@ -14,22 +14,34 @@ import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
+import java.util.ArrayList;
+
 /**
  * Created by Amir on 05.01.2016.
  */
 public class MyItem implements ClusterItem {
-    private final LatLng mPosition;
-    private final String title;
-    private final String snippet;
+    private final  LatLng mPosition ;
+ //   private   LatLng mPosition;
+ //   private final String title;
+  //   private final String snippet;
+    private long id;
+    private String title;
+    private String snippet;
+private  String Place;
+    private   double Lat;
+    private   double Lon;
 
-
-    public MyItem(double lat, double lng, String title, String snippet) {
+     public MyItem(double lat, double lng, String title, String snippet,String place) {
         this.title = title;
         this.snippet = snippet;
         mPosition = new LatLng(lat, lng);
+this.Lat = lat;
+        this.Lon=lng;
+this.Place = place;
 
 
     }
+
 
     @Override
     public LatLng getPosition() {
@@ -39,15 +51,42 @@ public class MyItem implements ClusterItem {
     public String getTitle() {
         return title;
     }
-
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getSnippet() {
         return snippet;
+    }
+    public void setSnippet(String snippet) {
+        this.snippet = snippet;
+    }
+
+
+    public double getLat() {
+        return Lat;
+    }
+
+    public void setLat(double Lat) {
+        this.Lat = Lat;
+    }
+
+    public double getLon() {
+        return Lon;
+    }
+
+    public void setLon(double Lon) {
+        this.Lon = Lon;
     }
 
     //public void setSnippet(String snippet) {
     //     this.snippet = snippet;
     // }
-
+    public String getPlace() {
+        return Place;
+    }
+    public void setPlace(String Place) {
+        this.Place = Place;
+    }
 
 }

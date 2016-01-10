@@ -11,6 +11,9 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.s1908114.newsapp.DatabaseHelper;
@@ -30,6 +33,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.android.clustering.view.ClusterRenderer;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.kml.KmlContainer;
 import com.google.maps.android.kml.KmlLayer;
@@ -52,26 +56,34 @@ import java.util.List;
  */
 
 public class MainFragment extends MapFragment implements OnMapReadyCallback {
-
-    private ClusterManager<MyItem> mClusterManager;
+public static Cluster clickedcluster;
+public static MyItem clickedClusterItem;
+    public static ClusterManager<MyItem> mClusterManager;
     SQLiteDatabase database ;
-    Cursor dbCursor;
+    public static Cursor dbCursor;
     DatabaseHelper dbHelper;
     private CameraPosition cp;
     public  static  GoogleMap mMap;
   //  private   float zoom;
-    public String query;
+    public String query=" SELECT   NewsTable.id, NewsTable.category as category ,NewsTable.headline as headline," +
+          " CapitalsTable.lat as lat ,CapitalsTable.lon as lon, NewsTable.place \n" +
+          "            FROM  NewsTable   JOIN CapitalsTable\n" +
+          "            ON NewsTable.statecode=CapitalsTable.code   "
+          + "where NewsTable.category=? or NewsTable.category=?" +
+          " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
     public static String[] MenuFilter;
     public static String[] DefaultFilter;
 
-    @Override
+
+     //      MenuFilter= new String[] {"Politics","Business","Sport","Science & Technology"};
+     @Override
     public void onResume() {
         super.onResume();
         if (cp != null) {
       //      mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
             //  cp = null;
         }
-        setUpMapIfNeeded();
+       setUpMapIfNeeded();
 
     }
 
@@ -80,7 +92,7 @@ public class MainFragment extends MapFragment implements OnMapReadyCallback {
         super.onPause();
 
 //        cp = mMap.getCameraPosition();
-          mMap = null;
+      //    mMap = null;
     }
 
     private void setUpMapIfNeeded() {
@@ -94,6 +106,8 @@ public class MainFragment extends MapFragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         dbHelper = new DatabaseHelper(this.getActivity());
+        setUpDatabase();
+
         mMap = googleMap;
 
         setUpMap();
@@ -115,84 +129,88 @@ public class MainFragment extends MapFragment implements OnMapReadyCallback {
     }
 
 
-    private void setUpClusterer() {
+    public void setUpClusterer() {
           mClusterManager = new ClusterManager<MyItem>( getActivity().getApplicationContext(), getMap());
 
         mClusterManager.setRenderer(new MyClusterRenderer(getActivity().getApplicationContext(), getMap(), mClusterManager));
 
         mMap.setOnCameraChangeListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
+        mClusterManager.getClusterMarkerCollection().setOnInfoWindowAdapter(new MycustomClusterAdapter(getActivity().getLayoutInflater()));
 
         mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
             @Override
             public boolean onClusterItemClick(MyItem item) {
-
-                Toast.makeText(getActivity(), (String)item.getSnippet(),
+                Toast.makeText(getActivity(), (String) item.getSnippet(),
                         Toast.LENGTH_LONG).show();
-            return false;
-        }
-    });
-        mClusterManager  .setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
-            @Override
-            public boolean onClusterClick(final Cluster<MyItem> cluster) {
-                Toast.makeText(getActivity(), (String)Integer.toString(cluster.getSize()),
-                        Toast.LENGTH_LONG).show();
-        //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-//                                cluster.getPosition(), (float) Math.floor(mMap
-           //                             .getCameraPosition().zoom + 1)), 300,
-          //              null);
-                return true;
+                return false;
             }
         });
-    setUpDatabase();
+
+
+    /*    mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
+            @Override
+
+          public boolean onClusterClick(final Cluster<MyItem> cluster) {
+                //     Marker ma = mMap.addMarker(new MarkerOptions().position(cluster.getPosition())
+                //              .title(String.valueOf(cluster.getSize())).snippet(String.valueOf(cluster.getSize())));
+                //      ma.showInfoWindow();
+                clickedcluster = cluster;
+
+                //        for (Object item : MainFragment.clickedcluster.getItems()) {
+                //         Toast.makeText(getActivity(), (String) Integer.toString(cluster.getSize()),
+                //                   Toast.LENGTH_LONG).show();
+                //       }
+
+
+                //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+//                                cluster.getPosition(), (float) Math.floor(mMap
+                //                             .getCameraPosition().zoom + 1)), 300,
+                //              null);
+                return false;
+            }
+        });
+*/
+        mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
+            @Override
+            public boolean onClusterItemClick(MyItem item) {
+                clickedClusterItem = item;
+         //       mClusterManager.getClusterMarkerCollection().setOnInfoWindowAdapter(new MycustomClusterAdapter());
+
+
+                return false;
+            }
+        });
+
+    //    mClusterManager.getClusterMarkerCollection().getMarkers().showInfoWindow()
 
 }
 
-    private void setUpDatabase() {
-        try {
-            markerFilter();
-            dbHelper.createDataBase();
 
-        } catch (IOException ioe) {
-            Log.e("heloH", "heloH");
-        }
-        List<MyMarkerObj> markers = new ArrayList<MyMarkerObj>();
-        try {
+    private void setUpquery(String qu  ) {
+
+         try {
+
             database = dbHelper.getDataBase();
-            query = " SELECT   NewsTable.id, NewsTable.category as category ,NewsTable.headline as headline, CapitalsTable.lat as lat ,CapitalsTable.lon as lon \n" +
-                    "            FROM  NewsTable   JOIN CapitalsTable\n" +
-                    "            ON NewsTable.statecode=CapitalsTable.code   "
-                    + "where NewsTable.category=? or NewsTable.category=?" +
-                    " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
-            //      MenuFilter= new String[] {"Politics","Business","Sport","Science & Technology"};
-            dbCursor = database.rawQuery(query, MenuFilter);
+
+            dbCursor = database.rawQuery(qu , MenuFilter);
             // query(DatabaseHelper.TABLE_NAME,, cols,where,null,null, null, null);
-       //     MenuFilter=null;
+            //     MenuFilter=null;
             dbCursor.moveToFirst();
 
 
             while (!dbCursor.isAfterLast()) {
-                MyMarkerObj m = new MyMarkerObj();
+                MyItem m = new MyItem(Double.valueOf(this.dbCursor.getString(3))
+                                      ,Double.valueOf(this.dbCursor.getString(4)),
+                       (this.dbCursor.getString(1)),(this.dbCursor.getString(2)),this.dbCursor.getString(5));
 
-                m.setTitle(dbCursor.getString(1));
-                m.setSnippet(dbCursor.getString(2));
-                m.setLat(dbCursor.getString(3));
-                m.setLon(dbCursor.getString(4));
 
-                markers.add(m);
+                mClusterManager.addItem(m);
+
                 dbCursor.moveToNext();
             }
 
-            for (int i = 0; i < markers.size(); i++) {
-
-                //      LatLng latlon = new LatLng(Double.valueOf(markers.get(i).getLat()),Double.valueOf(markers.get(i).getLon()));
-                MyItem offsetItem = new MyItem(Double.valueOf(markers.get(i).getLat()), Double.valueOf(markers.get(i).getLon()), markers.get(i).getTitle(), markers.get(i).getSnippet());
-                 mClusterManager.addItem(offsetItem);
-                // mMap.addMarker(new MarkerOptions() .title(markers.get(i).getTitle())  .snippet(markers.get(i).getSnippet())
-                //              .position(latlon)
-                //    );
-            }
-
+            //     for (int i = 0; i < markers.size(); i++) {      }
 
 
 
@@ -200,8 +218,8 @@ public class MainFragment extends MapFragment implements OnMapReadyCallback {
 
         {
             if (database != null) {
-                dbHelper.close();
-            }
+              dbHelper.close();
+             }
         }
 
     }
@@ -227,6 +245,9 @@ public class MainFragment extends MapFragment implements OnMapReadyCallback {
                     setZoomControlsEnabled(false);
            // zoom= mMap.getCameraPosition().zoom;
             setUpClusterer();
+
+            setUpquery(query);
+
 
         } catch (Exception e) {
             Log.e("Exception caugh eeet", e.toString());
@@ -258,6 +279,15 @@ public class MainFragment extends MapFragment implements OnMapReadyCallback {
                     new LatLng(50.051877, 12.741517), 5));
         }
     }
+    private void setUpDatabase(   ) {
+        try {
+            markerFilter();
+            dbHelper.createDataBase();
+
+        } catch (IOException ioe) {
+            Log.e("heloH", "heloH");
+        }};
+
 
 }
 

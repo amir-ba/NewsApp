@@ -18,9 +18,9 @@ import com.google.maps.android.ui.IconGenerator;
  * Created by Amir on 05.01.2016.
  */
 
-class MyClusterRenderer extends DefaultClusterRenderer<MyItem> {
-private Context cntxt;
-    public MyClusterRenderer(Context context, GoogleMap map,
+class MyClusterRenderer2 extends DefaultClusterRenderer<MyItem> {
+    private Context cntxt;
+    public MyClusterRenderer2(Context context, GoogleMap map,
                              ClusterManager<MyItem> clusterManager) {
         super(context, map, clusterManager);
 
@@ -35,19 +35,25 @@ private Context cntxt;
         markerOptions.title(item.getTitle());
         markerOptions.snippet(item.getSnippet());
 
-     }
+    }
 
     @Override
     protected void onBeforeClusterRendered(Cluster<MyItem> cluster, MarkerOptions markerOptions) {
 
 
-    super.onBeforeClusterRendered(cluster, markerOptions);
+        super.onBeforeClusterRendered(cluster, markerOptions);
         markerOptions.visible(true);
 
-     //     for (MyItem item : cluster.getItems()) {   IconGenerator iconFactory = new IconGenerator(cntxt);   addIcon(iconFactory, item.getPlace(), item.getPosition()); }
-       //  for (MyItem item : cluster.getItems()){            markerOptions.title(  item.getPlace());        }
-     }
+            for (MyItem item : cluster.getItems()) {   IconGenerator iconFactory = new IconGenerator(cntxt);   addIcon(iconFactory, item.getPlace(), item.getPosition()); }
+      }
+    private void addIcon(IconGenerator iconFactory, String text, LatLng position) {
+        MarkerOptions markerOptions = new MarkerOptions().
+                icon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(text))).
+                position(position).
+                anchor(0.5f,2f);
 
+        MainFragment.mMap.addMarker(markerOptions);
+    }
     @Override
     protected void onClusterItemRendered(MyItem clusterItem, Marker marker) {
         super.onClusterItemRendered(clusterItem, marker);

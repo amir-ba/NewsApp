@@ -6,7 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/library/GoogleMapsUtilities/GoogleMapsUtilities.iml" filepath="$PROJECT_DIR$/app/library/GoogleMapsUtilities/GoogleMapsUtilities.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/library/ParallaxScroll/ParallaxScroll.iml" filepath="$PROJECT_DIR$/app/library/ParallaxScroll/ParallaxScroll.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/library/library.iml" filepath="$PROJECT_DIR$/app/library/library.iml" />
     </modules>
   </component>
 </project>

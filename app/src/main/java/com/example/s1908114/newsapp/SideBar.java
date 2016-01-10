@@ -22,6 +22,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Marker;
+
+import java.util.ArrayList;
 
 import NewsApp.fragment.HomeFragment;
 import NewsApp.fragment.MainFragment;
@@ -46,12 +49,32 @@ public class SideBar extends AppCompatActivity
        fab.setOnClickListener(new View.OnClickListener() {
         @Override
        public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            //            .setAction("Action", null).show();
             FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.content_frame, new LocationFragment(), "Fragment2").commit();
+            MainFragment.mMap.clear();
+            MainFragment.mClusterManager.clearItems();
+        /*
 
+
+            java.util.Collection<Marker> userCollection =  MainFragment.mClusterManager.getMarkerCollection().getMarkers();
+            ArrayList<Marker> userList = new ArrayList<Marker>(userCollection);
+            // now is userList empty
+            for(Marker marker: userList){
+                marker.remove();
+            }
+
+            java.util.Collection<Marker> userCollection2 =  MainFragment.mClusterManager.getClusterMarkerCollection() .getMarkers();
+            ArrayList<Marker> userList2 = new ArrayList<Marker>(userCollection2);
+            // now is userList2 empty
+            for(Marker marker: userList2){
+                marker.remove();
+            }
+  */
+
+            fm.beginTransaction().add(R.id.content_frame, new LocationFragment() ).commit();
         }
+
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -64,7 +87,7 @@ public class SideBar extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         FragmentManager fm = getFragmentManager();
-        fm.beginTransaction().replace(R.id.content_frame,new MainFragment(),"Fragment1").commit();
+        fm.beginTransaction().replace(R.id.content_frame, new MainFragment(),"Fragment1").commit();
 
 
     }
@@ -123,6 +146,7 @@ public class SideBar extends AppCompatActivity
         if (id == R.id.nav_Home) {
          //   MainFragment.markerFilter(new String[]{"Politics","Business","Sport","Science & Technology","National"});
             MainFragment.mMap= null;
+            MainFragment.mClusterManager.clearItems();
 
             MainFragment fragment = new MainFragment();
             Bundle bundle = new Bundle();
@@ -137,6 +161,7 @@ public class SideBar extends AppCompatActivity
         } else if (id == R.id.nav_Politics) {
   //    fn.findFragmentById(R.id.content_frame).markerFilter(new String[]{"Politics"});
             MainFragment.mMap= null;
+            MainFragment.mClusterManager.clearItems();
 
             MainFragment fragment = new MainFragment();
             Bundle bundle = new Bundle();
@@ -147,6 +172,8 @@ public class SideBar extends AppCompatActivity
             actionbar.setTitle("Politics");
         } else if (id == R.id.nav_Business) {
             MainFragment.mMap= null;
+            MainFragment.mClusterManager.clearItems();
+
             MainFragment fragment = new MainFragment();
             Bundle bundle = new Bundle();
             bundle.putStringArray ("key",     new String[]{"Business"});
@@ -157,6 +184,7 @@ public class SideBar extends AppCompatActivity
             actionbar.setTitle("Business");
         } else if (id == R.id.nav_SocCul) {
             MainFragment.mMap= null;
+            MainFragment.mClusterManager.clearItems();
 
             MainFragment fragment = new MainFragment();
             Bundle bundle = new Bundle();
@@ -167,6 +195,7 @@ public class SideBar extends AppCompatActivity
             actionbar.setTitle("Social & Cultural");
         } else if (id == R.id.nav_SciTech) {
             MainFragment.mMap= null;
+            MainFragment.mClusterManager.clearItems();
 
             MainFragment fragment = new MainFragment();
             Bundle bundle = new Bundle();
@@ -179,6 +208,7 @@ public class SideBar extends AppCompatActivity
 
         } else if (id == R.id.nav_Sport) {
             MainFragment.mMap= null;
+            MainFragment.mClusterManager.clearItems();
 
             MainFragment fragment = new MainFragment();
             Bundle bundle = new Bundle();
