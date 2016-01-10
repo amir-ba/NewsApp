@@ -62,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             checkDB.close();
             return true;
         } catch (SQLiteException e) {
-            System.out.println("Database doesn't exist11");
+            System.out.println("Database doesn't exist");
             return false;
         }
     }
