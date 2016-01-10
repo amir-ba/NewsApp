@@ -6,13 +6,11 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,25 +18,14 @@ import android.widget.Toast;
 
 import com.example.s1908114.newsapp.DatabaseHelper;
 import com.example.s1908114.newsapp.MyItem;
-import com.example.s1908114.newsapp.MyMarkerObj;
 import com.example.s1908114.newsapp.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.maps.android.MarkerManager;
-import com.google.maps.android.ui.IconGenerator;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 
 
 /**
@@ -77,11 +64,11 @@ public class LocationFragment extends Fragment  {
 
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-      MainFragment.mClusterManager.setRenderer(new MyClusterRenderer2(getActivity().getApplicationContext(), mMap, MainFragment.mClusterManager));
+      MainFragment.mClusterManager.setRenderer(new MyclusterRenderer2(getActivity().getApplicationContext(), mMap, MainFragment.mClusterManager));
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (android.location.LocationListener) mlocListener);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100000, 10, (LocationListener) mlocListener);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,   mlocListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100000, 10,  mlocListener);
 
         } else {
             this.requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
@@ -106,7 +93,7 @@ public class LocationFragment extends Fragment  {
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.removeUpdates(mlocListener);
                     locationManager = null;
-                };
+                }
               Location loc = new Location("L");
       //          loc.setLatitude(lat);
        //         loc.setLongitude(lng);
@@ -144,7 +131,7 @@ public class LocationFragment extends Fragment  {
                  Toast.makeText(getActivity(), "Location off", Toast.LENGTH_SHORT).show();
             }
 
-        };
+        }
 
         @Override
         public void onProviderDisabled (String provider){

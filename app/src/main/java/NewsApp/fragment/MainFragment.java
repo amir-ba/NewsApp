@@ -1,55 +1,30 @@
 package NewsApp.fragment;
 
-import android.app.Fragment;
-import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.s1908114.newsapp.DatabaseHelper;
 import com.example.s1908114.newsapp.MyItem;
-import com.example.s1908114.newsapp.MyMarkerObj;
 import com.example.s1908114.newsapp.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
-import com.google.maps.android.clustering.view.ClusterRenderer;
-import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.kml.KmlContainer;
 import com.google.maps.android.kml.KmlLayer;
 import com.google.maps.android.kml.KmlPlacemark;
 import com.google.maps.android.kml.KmlPolygon;
 
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by s1908114 on 27.11.2015.
@@ -79,10 +54,7 @@ public static MyItem clickedClusterItem;
      @Override
     public void onResume() {
         super.onResume();
-        if (cp != null) {
-      //      mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
-            //  cp = null;
-        }
+
        setUpMapIfNeeded();
 
     }
@@ -121,7 +93,7 @@ public static MyItem clickedClusterItem;
             MenuFilter =  DefaultFilter;
         } else {
 
-            Bundle mBundle = new Bundle();
+            Bundle mBundle ;
             mBundle = getArguments();
             MenuFilter = mBundle.getStringArray("key");
         }
@@ -130,7 +102,7 @@ public static MyItem clickedClusterItem;
 
 
     public void setUpClusterer() {
-          mClusterManager = new ClusterManager<MyItem>( getActivity().getApplicationContext(), getMap());
+          mClusterManager = new ClusterManager< >( getActivity().getApplicationContext(), getMap());
 
         mClusterManager.setRenderer(new MyClusterRenderer(getActivity().getApplicationContext(), getMap(), mClusterManager));
 
@@ -141,7 +113,7 @@ public static MyItem clickedClusterItem;
         mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
             @Override
             public boolean onClusterItemClick(MyItem item) {
-                Toast.makeText(getActivity(), (String) item.getSnippet(),
+                Toast.makeText(getActivity(),  item.getSnippet(),
                         Toast.LENGTH_LONG).show();
                 return false;
             }
@@ -286,7 +258,7 @@ public static MyItem clickedClusterItem;
 
         } catch (IOException ioe) {
             Log.e("heloH", "heloH");
-        }};
+        }}
 
 
 }

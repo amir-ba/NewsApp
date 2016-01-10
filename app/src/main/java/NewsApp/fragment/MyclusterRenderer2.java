@@ -18,9 +18,9 @@ import com.google.maps.android.ui.IconGenerator;
  * Created by Amir on 05.01.2016.
  */
 
-class MyClusterRenderer2 extends DefaultClusterRenderer<MyItem> {
+class MyclusterRenderer2 extends DefaultClusterRenderer<MyItem> {
     private Context cntxt;
-    public MyClusterRenderer2(Context context, GoogleMap map,
+    public MyclusterRenderer2(Context context, GoogleMap map,
                              ClusterManager<MyItem> clusterManager) {
         super(context, map, clusterManager);
 
@@ -73,4 +73,4 @@ class MyClusterRenderer2 extends DefaultClusterRenderer<MyItem> {
         return  true ;
     }
 
-};
+}

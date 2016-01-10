@@ -124,8 +124,25 @@ public class SideBar extends AppCompatActivity
         //}
         switch (id){
             case R.id.action_mapview:
-            startActivity(new Intent(this,HomeFragment.class));
-            return true;
+                MainFragment.mMap= null;
+                MainFragment.mClusterManager.clearItems();
+
+                MainFragment fragment = new MainFragment();
+                Bundle bundle = new Bundle();
+                bundle.putStringArray ("key",     new String[]{"Politics", "Business", "Sport", "Science and Technology", "National"});
+                fragment.setArguments(bundle);
+                FragmentManager fm = getFragmentManager();
+                fm.beginTransaction().replace(R.id.content_frame,   fragment ).commit();            return true;
+
+
+        }
+        switch (id){
+            case R.id.action_listviewview:
+                FragmentManager fm = getFragmentManager();
+                fm.beginTransaction().replace(R.id.content_frame, new NewsListView()).commit();
+
+          //      startActivity(new Intent(this,NewsListView.class));
+                return true;
 
 
         }
@@ -150,7 +167,7 @@ public class SideBar extends AppCompatActivity
 
             MainFragment fragment = new MainFragment();
             Bundle bundle = new Bundle();
-            bundle.putStringArray ("key",     new String[]{"Politics","Business","Sport","Science & Technology","National"});
+            bundle.putStringArray ("key",     new String[]{"Politics", "Business", "Sport", "Science and Technology", "National"});
             fragment.setArguments(bundle);
             fn.beginTransaction().replace(R.id.content_frame,fragment).commit();
             actionbar.setTitle("All News");
