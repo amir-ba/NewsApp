@@ -30,13 +30,12 @@ public class MycustomClusterAdapter implements GoogleMap.InfoWindowAdapter {
         TextView tv = (TextView) view.findViewById(R.id.title);
          tv.setText(marker.getTitle());
         TextView tv2 = (TextView) view.findViewById(R.id.snippet);
-
           if (MainFragment.clickedcluster != null) {
             tv2.setText(String
                     .valueOf(MainFragment.clickedcluster.getItems().size())
                     + " more offers available");
         }
-marker.showInfoWindow();
+
         return view;
     }
 

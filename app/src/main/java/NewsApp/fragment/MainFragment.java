@@ -1,14 +1,22 @@
 package NewsApp.fragment;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.s1908114.newsapp.DatabaseHelper;
 import com.example.s1908114.newsapp.MyItem;
+import com.example.s1908114.newsapp.NewsListView;
+import com.example.s1908114.newsapp.NewsListViewFromMap;
 import com.example.s1908114.newsapp.R;
+import com.example.s1908114.newsapp.SideBar;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -25,6 +33,9 @@ import com.google.maps.android.kml.KmlPlacemark;
 import com.google.maps.android.kml.KmlPolygon;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import parallaxscrollexample.SingleParallaxScrollView;
 
 /**
  * Created by s1908114 on 27.11.2015.
@@ -41,17 +52,16 @@ public static MyItem clickedClusterItem;
     public  static  GoogleMap mMap;
   //  private   float zoom;
     public String query=" SELECT   NewsTable.id, NewsTable.category as category ,NewsTable.headline as headline," +
-          " CapitalsTable.lat as lat ,CapitalsTable.lon as lon, NewsTable.place \n" +
+          " CapitalsTable.lat as lat ,CapitalsTable.lon as lon, NewsTable.place ,NewsTable.maintext  \n" +
           "            FROM  NewsTable   JOIN CapitalsTable\n" +
           "            ON NewsTable.statecode=CapitalsTable.code   "
           + "where NewsTable.category=? or NewsTable.category=?" +
           " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
-    public static String[] MenuFilter;
-    public static String[] DefaultFilter;
 
 
      //      MenuFilter= new String[] {"Politics","Business","Sport","Science & Technology"};
-     @Override
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -74,8 +84,7 @@ public static MyItem clickedClusterItem;
             getMapAsync(this);
         }
     }
-
-    @Override
+     @Override
     public void onMapReady(GoogleMap googleMap) {
         dbHelper = new DatabaseHelper(this.getActivity());
         setUpDatabase();
@@ -87,15 +96,9 @@ public static MyItem clickedClusterItem;
     }
 
     public void markerFilter() {
-        DefaultFilter = new String[]{"Politics", "Business", "Sport", "Science and Technology", "National"};
 
-        if (MenuFilter == null) {
-            MenuFilter =  DefaultFilter;
-        } else {
-
-            Bundle mBundle ;
-            mBundle = getArguments();
-            MenuFilter = mBundle.getStringArray("key");
+        if (SideBar.MenuFilter == null) {
+            SideBar.MenuFilter = new String[]{"Politics", "Business", "Sports", "Science and Technology", "National"};
         }
 
     }
@@ -110,49 +113,50 @@ public static MyItem clickedClusterItem;
         mMap.setOnMarkerClickListener(mClusterManager);
         mClusterManager.getClusterMarkerCollection().setOnInfoWindowAdapter(new MycustomClusterAdapter(getActivity().getLayoutInflater()));
 
-        mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
-            @Override
-            public boolean onClusterItemClick(MyItem item) {
-                Toast.makeText(getActivity(),  item.getSnippet(),
-                        Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
 
 
-    /*    mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
-            @Override
 
-          public boolean onClusterClick(final Cluster<MyItem> cluster) {
-                //     Marker ma = mMap.addMarker(new MarkerOptions().position(cluster.getPosition())
-                //              .title(String.valueOf(cluster.getSize())).snippet(String.valueOf(cluster.getSize())));
-                //      ma.showInfoWindow();
-                clickedcluster = cluster;
+       mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
+           @Override
 
-                //        for (Object item : MainFragment.clickedcluster.getItems()) {
-                //         Toast.makeText(getActivity(), (String) Integer.toString(cluster.getSize()),
-                //                   Toast.LENGTH_LONG).show();
-                //       }
+           public boolean onClusterClick(final Cluster<MyItem> cluster) {
+               //     Marker ma = mMap.addMarker(new MarkerOptions().position(cluster.getPosition())
+               //              .title(String.valueOf(cluster.getSize())).snippet(String.valueOf(cluster.getSize())));
+               //      ma.showInfoWindow();
+               clickedcluster = cluster;
+               NewsListViewFromMap.list_headline = new ArrayList<>();
+
+               NewsListViewFromMap.list_text = new ArrayList<>();
+               for (MyItem item : cluster.getItems()) {
+                   //    Toast.makeText(getActivity(), (String) Integer.toString(cluster.getSize()),
+                   //             Toast.LENGTH_LONG).show();
+                   NewsListViewFromMap.list_headline.add(item.getSnippet());
+                   NewsListViewFromMap.list_text.add(item.getText());
+               }
+               FragmentManager fm = getFragmentManager();
+             Fragment a = fm.findFragmentByTag("FragmentLoc");
+               FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+               fab.hide();
+          //     fm.beginTransaction().replace(R.id.content_frame, new NewsListViewFromMap(),"list").addToBackStack("list")
+
+               fm.beginTransaction().replace(R.id.content_frame, new NewsListViewFromMap(),"list").addToBackStack("list")
+               .commit();
+
+//                getFragmentManager().executePendingTransactions();
 
 
-                //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+               // fm.beginTransaction().remove(fm.getFragment()).commit();
+
+
+               //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
 //                                cluster.getPosition(), (float) Math.floor(mMap
-                //                             .getCameraPosition().zoom + 1)), 300,
-                //              null);
-                return false;
-            }
-        });
-*/
-        mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
-            @Override
-            public boolean onClusterItemClick(MyItem item) {
-                clickedClusterItem = item;
-         //       mClusterManager.getClusterMarkerCollection().setOnInfoWindowAdapter(new MycustomClusterAdapter());
+               //                             .getCameraPosition().zoom + 1)), 300,
+               //              null);
+               return true;
+           }
+       });
 
 
-                return false;
-            }
-        });
 
     //    mClusterManager.getClusterMarkerCollection().getMarkers().showInfoWindow()
 
@@ -165,7 +169,7 @@ public static MyItem clickedClusterItem;
 
             database = dbHelper.getDataBase();
 
-            dbCursor = database.rawQuery(qu , MenuFilter);
+            dbCursor = database.rawQuery(qu , SideBar.MenuFilter);
             // query(DatabaseHelper.TABLE_NAME,, cols,where,null,null, null, null);
             //     MenuFilter=null;
             dbCursor.moveToFirst();
@@ -174,7 +178,7 @@ public static MyItem clickedClusterItem;
             while (!dbCursor.isAfterLast()) {
                 MyItem m = new MyItem(Double.valueOf(this.dbCursor.getString(3))
                                       ,Double.valueOf(this.dbCursor.getString(4)),
-                       (this.dbCursor.getString(1)),(this.dbCursor.getString(2)),this.dbCursor.getString(5));
+                       (this.dbCursor.getString(1)),(this.dbCursor.getString(2)),this.dbCursor.getString(5),this.dbCursor.getString(6));
 
 
                 mClusterManager.addItem(m);
@@ -259,6 +263,8 @@ public static MyItem clickedClusterItem;
         } catch (IOException ioe) {
             Log.e("heloH", "heloH");
         }}
+
+
 
 
 }

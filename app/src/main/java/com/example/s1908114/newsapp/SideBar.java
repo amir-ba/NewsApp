@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
  import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import NewsApp.fragment.HomeFragment;
 import NewsApp.fragment.MainFragment;
@@ -33,6 +35,10 @@ import NewsApp.fragment.LocationFragment;
 public class SideBar extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener   {
     public android.support.v7.app.ActionBar actionbar;
+    public static boolean IsTypeList = false;
+    public static String[] MenuFilter;
+public  Fragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -40,6 +46,8 @@ public class SideBar extends AppCompatActivity
         setContentView(R.layout.activity_side_bar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
        setSupportActionBar(toolbar);
+
+
 
     actionbar = getSupportActionBar() ;
   //      CalculateActionBar(this.getApplicationContext());
@@ -49,8 +57,8 @@ public class SideBar extends AppCompatActivity
        fab.setOnClickListener(new View.OnClickListener() {
         @Override
        public void onClick(View view) {
-               // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            //            .setAction("Action", null).show();
+                Snackbar.make(view, "New around your area are shown here. select city to see the headlines ", Snackbar.LENGTH_LONG)
+                       .setAction("Action", null).show();
             FragmentManager fm = getFragmentManager();
             MainFragment.mMap.clear();
             MainFragment.mClusterManager.clearItems();
@@ -71,8 +79,10 @@ public class SideBar extends AppCompatActivity
                 marker.remove();
             }
   */
+           // fm.beginTransaction().remove(fragment);
+             //fm.popBackStack(null,f)
 
-            fm.beginTransaction().add(R.id.content_frame, new LocationFragment() ).commit();
+            fm.beginTransaction().add(R.id.content_frame, new LocationFragment(), "FragmentLoc") .addToBackStack("FragmentLoc") .commit();
         }
 
         });
@@ -87,7 +97,7 @@ public class SideBar extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         FragmentManager fm = getFragmentManager();
-        fm.beginTransaction().replace(R.id.content_frame, new MainFragment(),"Fragment1").commit();
+        fm.beginTransaction().replace(R.id.content_frame, new MainFragment(),"Fragment1") .commit();
 
 
     }
@@ -97,9 +107,31 @@ public class SideBar extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        Fragment a =getFragmentManager().findFragmentByTag("list");
+        FragmentManager fmm =       getFragmentManager();
+        if ((drawer.isDrawerOpen(GravityCompat.START))  ) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } if (  (getFragmentManager().getBackStackEntryCount() > 0)){
+         getFragmentManager().popBackStack();
+             int ss = (getFragmentManager().getBackStackEntryCount());  }
+        if((getFragmentManager().findFragmentByTag("list1") !=null)&& getFragmentManager().findFragmentByTag("list1").isVisible()){
+            FloatingActionButton fab = (FloatingActionButton) this.findViewById(R.id.fab);
+//int g =   getFragmentManager().getBackStackEntryAt(1).getId();
+//String g1 =   getFragmentManager().getBackStackEntryAt(1).getName();
+  //          fmm.popBackStack();
+    //        FragmentManager fm = getFragmentManager();
+      //      Fragment ac = fm.findFragmentByTag("FragmentLoc");
+        //    fmm.beginTransaction().show(ac).commit();
+          //  System.out.println(g1);           fmm.popBackStack(      null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fab.show();
+           // getFragmentManager().popBackStack();
+           // getFragmentManager().beginTransaction().show().commit();
+        }  if( (getFragmentManager().findFragmentByTag("list") !=null)&&getFragmentManager().findFragmentByTag("list").isVisible()){
+            FloatingActionButton fab = (FloatingActionButton) this.findViewById(R.id.fab);
+            fab.show();
+           // getFragmentManager().popBackStack();
+
+        }else {
             super.onBackPressed();
         }
     }
@@ -110,7 +142,22 @@ public class SideBar extends AppCompatActivity
         getMenuInflater().inflate(R.menu.side_bar, menu);
         return true;
     }
+public   void CreateFragment() {
+    //   MainFragment.markerFilter(new String[]{"Politics","Business","Sport","Science & Technology","National"});
+    fragment= null;
+     MainFragment.mMap = null;
+    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+    MainFragment.mClusterManager.clearItems();
+    if (!IsTypeList  ) {
+          fragment = new  MainFragment();
+        fab.show();
 
+    } else {
+          fragment = new NewsListView();
+        fab.hide();
+
+    }
+ }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -126,20 +173,22 @@ public class SideBar extends AppCompatActivity
             case R.id.action_mapview:
                 MainFragment.mMap= null;
                 MainFragment.mClusterManager.clearItems();
-
                 MainFragment fragment = new MainFragment();
-                Bundle bundle = new Bundle();
-                bundle.putStringArray ("key",     new String[]{"Politics", "Business", "Sport", "Science and Technology", "National"});
-                fragment.setArguments(bundle);
-                FragmentManager fm = getFragmentManager();
-                fm.beginTransaction().replace(R.id.content_frame,   fragment ).commit();            return true;
+                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                fab.show();
+                IsTypeList=false;
+                  FragmentManager fm = getFragmentManager();
+                fm.beginTransaction().replace(R.id.content_frame,   fragment, "Fragment1" ).addToBackStack("Fragment1").commit();            return true;
 
 
         }
         switch (id){
             case R.id.action_listviewview:
+                IsTypeList=true;
                 FragmentManager fm = getFragmentManager();
-                fm.beginTransaction().replace(R.id.content_frame, new NewsListView()).commit();
+                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+fab.hide();
+                fm.beginTransaction().replace(R.id.content_frame, new NewsListView(),"FragmentList") .commit();
 
           //      startActivity(new Intent(this,NewsListView.class));
                 return true;
@@ -161,15 +210,10 @@ public class SideBar extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_Home) {
-         //   MainFragment.markerFilter(new String[]{"Politics","Business","Sport","Science & Technology","National"});
-            MainFragment.mMap= null;
-            MainFragment.mClusterManager.clearItems();
+            CreateFragment();
+            MenuFilter = new String[]{"Politics", "Business", "Sports", "Science and Technology", "National"};
 
-            MainFragment fragment = new MainFragment();
-            Bundle bundle = new Bundle();
-            bundle.putStringArray ("key",     new String[]{"Politics", "Business", "Sport", "Science and Technology", "National"});
-            fragment.setArguments(bundle);
-            fn.beginTransaction().replace(R.id.content_frame,fragment).commit();
+            fn.beginTransaction().replace(R.id.content_frame,fragment,"FragmentHome").commit();
             actionbar.setTitle("All News");
         }   else if (id == R.id.nav_Near) {
             fn.beginTransaction().replace(R.id.content_frame,new LocationFragment()).commit();
@@ -177,62 +221,43 @@ public class SideBar extends AppCompatActivity
 
         } else if (id == R.id.nav_Politics) {
   //    fn.findFragmentById(R.id.content_frame).markerFilter(new String[]{"Politics"});
-            MainFragment.mMap= null;
-            MainFragment.mClusterManager.clearItems();
+      //      MainFragment.mMap= null;
+      //      MainFragment.mClusterManager.clearItems();
 
-            MainFragment fragment = new MainFragment();
-            Bundle bundle = new Bundle();
-            bundle.putStringArray("key", new String[]{"Politics"});
-            fragment.setArguments(bundle);
+        //    MainFragment fragment = new MainFragment();
+            CreateFragment();
 
-           fn.beginTransaction().replace(R.id.content_frame, fragment).commit();
+             MenuFilter =new String[]{"Politics"} ;
+
+           fn.beginTransaction().replace(R.id.content_frame, fragment,"FragmentPolitc").commit();
             actionbar.setTitle("Politics");
         } else if (id == R.id.nav_Business) {
-            MainFragment.mMap= null;
-            MainFragment.mClusterManager.clearItems();
+            CreateFragment();
 
-            MainFragment fragment = new MainFragment();
-            Bundle bundle = new Bundle();
-            bundle.putStringArray ("key",     new String[]{"Business"});
+            MenuFilter =     new String[]{"Business"} ;
 
-            fragment.setArguments(bundle);
 
-            fn.beginTransaction().replace(R.id.content_frame,  fragment).commit();
+            fn.beginTransaction().replace(R.id.content_frame,  fragment,"FragmentBusiness").commit();
             actionbar.setTitle("Business");
         } else if (id == R.id.nav_SocCul) {
-            MainFragment.mMap= null;
-            MainFragment.mClusterManager.clearItems();
+            CreateFragment();
+            MenuFilter =    new String[]{"National"} ;
 
-            MainFragment fragment = new MainFragment();
-            Bundle bundle = new Bundle();
-            bundle.putStringArray ("key",     new String[]{"National"});
-            fragment.setArguments(bundle);
-
-            fn.beginTransaction().replace(R.id.content_frame,  fragment).commit();
+            fn.beginTransaction().replace(R.id.content_frame,  fragment,"FragmentNational").commit();
             actionbar.setTitle("Social & Cultural");
         } else if (id == R.id.nav_SciTech) {
-            MainFragment.mMap= null;
-            MainFragment.mClusterManager.clearItems();
+            CreateFragment();
+            MenuFilter = new String[]{"Science and Technology"} ;
 
-            MainFragment fragment = new MainFragment();
-            Bundle bundle = new Bundle();
-            bundle.putStringArray("key", new String[]{"Science & Technology"});
-            fragment.setArguments(bundle);
-
-            fn.beginTransaction().replace(R.id.content_frame,  fragment).commit();
-            actionbar.setTitle("Science and Technology");
+            fn.beginTransaction().replace(R.id.content_frame,  fragment,"Fragmentscience").commit();
+            actionbar.setTitle("Science & Technology");
 
 
         } else if (id == R.id.nav_Sport) {
-            MainFragment.mMap= null;
-            MainFragment.mClusterManager.clearItems();
+            CreateFragment();
+            MenuFilter =     new String[]{"Sports"} ;
 
-            MainFragment fragment = new MainFragment();
-            Bundle bundle = new Bundle();
-            bundle.putStringArray ("key",     new String[]{"Sport"});
-            fragment.setArguments(bundle);
-
-            fn.beginTransaction().replace(R.id.content_frame,  fragment).commit();
+            fn.beginTransaction().replace(R.id.content_frame,  fragment,"Fragmentsports").commit();
             actionbar.setTitle("Sports");
 
         }

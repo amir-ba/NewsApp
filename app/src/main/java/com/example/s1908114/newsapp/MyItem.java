@@ -27,17 +27,19 @@ public class MyItem implements ClusterItem {
     private long id;
     private String title;
     private String snippet;
+    private String Text;
 private  String Place;
     private   double Lat;
     private   double Lon;
 
-     public MyItem(double lat, double lng, String title, String snippet,String place) {
+     public MyItem(double lat, double lng, String title, String snippet,String place,String text) {
         this.title = title;
         this.snippet = snippet;
         mPosition = new LatLng(lat, lng);
 this.Lat = lat;
         this.Lon=lng;
 this.Place = place;
+this.Text = text;
 
 
     }
@@ -88,5 +90,10 @@ this.Place = place;
     public void setPlace(String Place) {
         this.Place = Place;
     }
-
+    public String getText() {
+        return Text;
+    }
+    public void setText(String text) {
+        this.Text = text;
+    }
 }

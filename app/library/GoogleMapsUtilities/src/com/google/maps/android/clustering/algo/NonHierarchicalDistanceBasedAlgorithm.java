@@ -197,7 +197,7 @@ public class NonHierarchicalDistanceBasedAlgorithm<T extends ClusterItem> implem
 
         @Override
         public int getSize() {
-            return 2;
+            return 1;
         }
     }
 }

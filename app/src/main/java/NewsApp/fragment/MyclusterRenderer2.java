@@ -40,11 +40,8 @@ class MyclusterRenderer2 extends DefaultClusterRenderer<MyItem> {
     @Override
     protected void onBeforeClusterRendered(Cluster<MyItem> cluster, MarkerOptions markerOptions) {
 
-
-        super.onBeforeClusterRendered(cluster, markerOptions);
-        markerOptions.visible(true);
-
-            for (MyItem item : cluster.getItems()) {   IconGenerator iconFactory = new IconGenerator(cntxt);   addIcon(iconFactory, item.getPlace(), item.getPosition()); }
+         super.onBeforeClusterRendered(cluster, markerOptions);
+             for (MyItem item : cluster.getItems()) {   IconGenerator iconFactorya = new IconGenerator(cntxt);  addIcon(iconFactorya, item.getPlace(), item.getPosition()); }
       }
     private void addIcon(IconGenerator iconFactory, String text, LatLng position) {
         MarkerOptions markerOptions = new MarkerOptions().
@@ -70,7 +67,7 @@ class MyclusterRenderer2 extends DefaultClusterRenderer<MyItem> {
     protected boolean shouldRenderAsCluster(Cluster<MyItem> cluster) {
 
         //start clustering if at least 2 items overlap cluster.getSize() > 1 && MainFragment.zoom <5
-        return  true ;
+        return  cluster.getSize() > 0 ;
     }
 
 }

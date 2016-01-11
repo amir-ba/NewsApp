@@ -32,8 +32,6 @@ private Context cntxt;
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_location));
 
         super.onBeforeClusterItemRendered(item, markerOptions);
-        markerOptions.title(item.getTitle());
-        markerOptions.snippet(item.getSnippet());
 
      }
 
@@ -42,7 +40,7 @@ private Context cntxt;
 
 
     super.onBeforeClusterRendered(cluster, markerOptions);
-        markerOptions.visible(true);
+
 
      //     for (MyItem item : cluster.getItems()) {   IconGenerator iconFactory = new IconGenerator(cntxt);   addIcon(iconFactory, item.getPlace(), item.getPosition()); }
        //  for (MyItem item : cluster.getItems()){            markerOptions.title(  item.getPlace());        }
@@ -64,7 +62,8 @@ private Context cntxt;
     protected boolean shouldRenderAsCluster(Cluster<MyItem> cluster) {
 
         //start clustering if at least 2 items overlap cluster.getSize() > 1 && MainFragment.zoom <5
-        return  true ;
+
+           return true;
     }
 
-};
+}
