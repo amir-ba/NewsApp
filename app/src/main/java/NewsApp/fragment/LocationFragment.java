@@ -55,10 +55,10 @@ public class LocationFragment extends Fragment  {
 
       final String[] LOCATION_PERMS = {Manifest.permission.ACCESS_FINE_LOCATION};
     public String query=" SELECT   NewsTable.id, NewsTable.category as category ,NewsTable.headline as headline," +
-            " NewsTable.lat as lat ,NewsTable.lon as lon,NewsTable.place, NewsTable.maintext \n" +
+            " NewsTable.lat as lat ,NewsTable.lon as lon,NewsTable.place, NewsTable.maintext , NewsTable.dates\n" +
             "            FROM  NewsTable    "
             + "where NewsTable.category=? or NewsTable.category=?" +
-            " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
+            " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
     final int LOCATION_REQUEST = 1340;
     public Marker lastOpenned = null;
 
@@ -70,14 +70,14 @@ public class LocationFragment extends Fragment  {
         mMap = MainFragment.mMap;
        mMap.setMyLocationEnabled(true);
       mMap.clear();
-          CameraUpdateFactory.zoomTo(8);
+          CameraUpdateFactory.zoomTo(7);
 
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
       MainFragment.mClusterManager.setRenderer(new MyclusterRenderer2(getActivity().getApplicationContext(), mMap, MainFragment.mClusterManager));
-          MainFragment. mClusterManager.getClusterMarkerCollection().setOnInfoWindowAdapter(new MycustomClusterAdapter(getActivity().getLayoutInflater()));
+         // MainFragment. mClusterManager.getClusterMarkerCollection().setOnInfoWindowAdapter(new MycustomClusterAdapter(getActivity().getLayoutInflater()));
           mMap.setOnMarkerClickListener(MainFragment.mClusterManager);
-
+/*
           MainFragment. mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
               @Override
 
@@ -91,6 +91,8 @@ public class LocationFragment extends Fragment  {
                       //             Toast.LENGTH_LONG).show();
                       NewsListViewFromMap.list_headline.add(item.getSnippet());
                       NewsListViewFromMap.list_text.add(item.getText());
+                      NewsListViewFromMap.list_date.add(item.getText());
+                      NewsListViewFromMap.list_place.add(item.getText());
                   }
                   FragmentManager fm = getFragmentManager();
                   Fragment a = fm.findFragmentByTag("FragmentLoc");
@@ -117,8 +119,7 @@ public class LocationFragment extends Fragment  {
                   return true;
               }
           });
-
-
+*/
           if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,   mlocListener);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100000, 10,  mlocListener);
@@ -127,10 +128,6 @@ public class LocationFragment extends Fragment  {
             this.requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
 
         }
-     //    if ( mlocListener !=null  )  {
-     //       locationManager.removeUpdates(mlocListener);
-     //       locationManager = null;
-    //    }
 
          return rootView;
     }
@@ -154,7 +151,7 @@ public class LocationFragment extends Fragment  {
       //          loc.setLatitude(lat);
        //         loc.setLongitude(lng);
                 LatLng latLng = new LatLng(lat, lng);
-                Circle circle = mMap.addCircle(new CircleOptions().center(latLng).radius(200 * 100).fillColor(0x5500ff00).strokeColor(0x5500ff00));
+                Circle circle = mMap.addCircle(new CircleOptions().center(latLng).radius(200 * 100).fillColor(Color.parseColor("#6603A9F4")).strokeColor(Color.parseColor("#6603A9F4")));
                 setUpDatabase(query, loc);
 
                 //  System.out.println(lat);
@@ -173,7 +170,7 @@ public class LocationFragment extends Fragment  {
 
            //    Collection a = MainFragment.mClusterManager.get    MainFragment.mClusterManager.get
 
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,8));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,7));
               //  mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
 
             //    CameraUpdateFactory.zoomTo(8);
@@ -224,7 +221,10 @@ public class LocationFragment extends Fragment  {
              while (!dbCursor.isAfterLast()) {
                 MyItem m = new MyItem(Double.valueOf(this.dbCursor.getString(3))
                         ,Double.valueOf(this.dbCursor.getString(4)),
-                        (this.dbCursor.getString(1)),(this.dbCursor.getString(2)),this.dbCursor.getString(5),this.dbCursor.getString(6));
+                        (this.dbCursor.getString(1)),
+                        (this.dbCursor.getString(2)),
+                        this.dbCursor.getString(5),
+                        this.dbCursor.getString(6), this.dbCursor.getString(7));
 
                 MainFragment.mClusterManager.addItem(m);
 

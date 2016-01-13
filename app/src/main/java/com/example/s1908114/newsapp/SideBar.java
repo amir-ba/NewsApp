@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -20,6 +21,7 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 
 import com.google.android.gms.maps.SupportMapFragment;
@@ -49,19 +51,19 @@ public  Fragment fragment;
 
 
 
-    actionbar = getSupportActionBar() ;
-  //      CalculateActionBar(this.getApplicationContext());
+        actionbar = getSupportActionBar() ;
+  //     CalculateActionBar(this.getApplicationContext());
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
        fab.setOnClickListener(new View.OnClickListener() {
-        @Override
-       public void onClick(View view) {
-                Snackbar.make(view, "New around your area are shown here. select city to see the headlines ", Snackbar.LENGTH_LONG)
+           @Override
+           public void onClick(View view) {
+               Snackbar.make(view, "New around your area are shown here. select city to see the headlines ", Snackbar.LENGTH_LONG)
                        .setAction("Action", null).show();
-            FragmentManager fm = getFragmentManager();
-            MainFragment.mMap.clear();
-            MainFragment.mClusterManager.clearItems();
+               FragmentManager fm = getFragmentManager();
+               MainFragment.mMap.clear();
+               MainFragment.mClusterManager.clearItems();
         /*
 
 
@@ -79,28 +81,33 @@ public  Fragment fragment;
                 marker.remove();
             }
   */
-           // fm.beginTransaction().remove(fragment);
-             //fm.popBackStack(null,f)
+               // fm.beginTransaction().remove(fragment);
+               //fm.popBackStack(null,f)
 
-            fm.beginTransaction().add(R.id.content_frame, new LocationFragment(), "FragmentLoc") .addToBackStack("FragmentLoc") .commit();
-        }
+               fm.beginTransaction().add(R.id.content_frame, new LocationFragment(), "FragmentLoc").addToBackStack("FragmentLoc").commit();
+           }
 
-        });
+       });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         FragmentManager fm = getFragmentManager();
-        fm.beginTransaction().replace(R.id.content_frame, new MainFragment(),"Fragment1") .commit();
+        fm.beginTransaction().replace(R.id.content_frame, new MainFragment(), "Fragment1") .commit();
 
 
     }
+    public void replacefragment( Fragment fg , String name){
+        FragmentManager fm = getFragmentManager();
+
+        fm.beginTransaction().replace(R.id.content_frame, fg,name).addToBackStack(name)
+                .commit();
+    }
+
 
 
 
@@ -216,15 +223,11 @@ fab.hide();
             fn.beginTransaction().replace(R.id.content_frame,fragment,"FragmentHome").commit();
             actionbar.setTitle("All News");
         }   else if (id == R.id.nav_Near) {
-            fn.beginTransaction().replace(R.id.content_frame,new LocationFragment()).commit();
+            fn.beginTransaction().replace(R.id.content_frame,new HomeFragment()).commit();
             actionbar.setTitle("News Near Me");
 
-        } else if (id == R.id.nav_Politics) {
-  //    fn.findFragmentById(R.id.content_frame).markerFilter(new String[]{"Politics"});
-      //      MainFragment.mMap= null;
-      //      MainFragment.mClusterManager.clearItems();
+        }   else if (id == R.id.nav_Politics) {
 
-        //    MainFragment fragment = new MainFragment();
             CreateFragment();
 
              MenuFilter =new String[]{"Politics"} ;
@@ -241,7 +244,7 @@ fab.hide();
             actionbar.setTitle("Business");
         } else if (id == R.id.nav_SocCul) {
             CreateFragment();
-            MenuFilter =    new String[]{"National"} ;
+            MenuFilter =    new String[]{"Education"} ;
 
             fn.beginTransaction().replace(R.id.content_frame,  fragment,"FragmentNational").commit();
             actionbar.setTitle("Social & Cultural");

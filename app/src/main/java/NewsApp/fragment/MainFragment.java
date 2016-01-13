@@ -52,11 +52,11 @@ public static MyItem clickedClusterItem;
     public  static  GoogleMap mMap;
   //  private   float zoom;
     public String query=" SELECT   NewsTable.id, NewsTable.category as category ,NewsTable.headline as headline," +
-          " CapitalsTable.lat as lat ,CapitalsTable.lon as lon, NewsTable.place ,NewsTable.maintext  \n" +
+          " CapitalsTable.lat as lat ,CapitalsTable.lon as lon, NewsTable.place ,NewsTable.maintext , NewsTable.dates \n" +
           "            FROM  NewsTable   JOIN CapitalsTable\n" +
           "            ON NewsTable.statecode=CapitalsTable.code   "
           + "where NewsTable.category=? or NewsTable.category=?" +
-          " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
+          " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
 
 
      //      MenuFilter= new String[] {"Politics","Business","Sport","Science & Technology"};
@@ -68,7 +68,12 @@ public static MyItem clickedClusterItem;
        setUpMapIfNeeded();
 
     }
+     public void onStart() {
+         super.onStart();
 
+        setUpMapIfNeeded();
+
+    }
     public void onPause() {
 
         super.onPause();
@@ -98,7 +103,7 @@ public static MyItem clickedClusterItem;
     public void markerFilter() {
 
         if (SideBar.MenuFilter == null) {
-            SideBar.MenuFilter = new String[]{"Politics", "Business", "Sports", "Science and Technology", "National"};
+            SideBar.MenuFilter = new String[]{"Politics", "Business", "Sports", "Science and Technology", "National", "Education"};
         }
 
     }
@@ -111,7 +116,7 @@ public static MyItem clickedClusterItem;
 
         mMap.setOnCameraChangeListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
-        mClusterManager.getClusterMarkerCollection().setOnInfoWindowAdapter(new MycustomClusterAdapter(getActivity().getLayoutInflater()));
+      //  mClusterManager.getClusterMarkerCollection().setOnInfoWindowAdapter(new MycustomClusterAdapter(getActivity().getLayoutInflater()));
 
 
 
@@ -120,29 +125,26 @@ public static MyItem clickedClusterItem;
            @Override
 
            public boolean onClusterClick(final Cluster<MyItem> cluster) {
-               //     Marker ma = mMap.addMarker(new MarkerOptions().position(cluster.getPosition())
-               //              .title(String.valueOf(cluster.getSize())).snippet(String.valueOf(cluster.getSize())));
-               //      ma.showInfoWindow();
+
                clickedcluster = cluster;
                NewsListViewFromMap.list_headline = new ArrayList<>();
 
                NewsListViewFromMap.list_text = new ArrayList<>();
+               NewsListViewFromMap.list_date= new ArrayList<>();
+               NewsListViewFromMap.list_place= new ArrayList<>();
                for (MyItem item : cluster.getItems()) {
-                   //    Toast.makeText(getActivity(), (String) Integer.toString(cluster.getSize()),
-                   //             Toast.LENGTH_LONG).show();
+
                    NewsListViewFromMap.list_headline.add(item.getSnippet());
                    NewsListViewFromMap.list_text.add(item.getText());
+                   NewsListViewFromMap.list_date.add(item.getDate());
+                   NewsListViewFromMap.list_place.add(item.getPlace());
                }
                FragmentManager fm = getFragmentManager();
              Fragment a = fm.findFragmentByTag("FragmentLoc");
                FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
                fab.hide();
           //     fm.beginTransaction().replace(R.id.content_frame, new NewsListViewFromMap(),"list").addToBackStack("list")
-
-               fm.beginTransaction().replace(R.id.content_frame, new NewsListViewFromMap(),"list").addToBackStack("list")
-               .commit();
-
-//                getFragmentManager().executePendingTransactions();
+               ((SideBar)getActivity()).replacefragment(new NewsListViewFromMap(),"list");
 
 
                // fm.beginTransaction().remove(fm.getFragment()).commit();
@@ -178,7 +180,10 @@ public static MyItem clickedClusterItem;
             while (!dbCursor.isAfterLast()) {
                 MyItem m = new MyItem(Double.valueOf(this.dbCursor.getString(3))
                                       ,Double.valueOf(this.dbCursor.getString(4)),
-                       (this.dbCursor.getString(1)),(this.dbCursor.getString(2)),this.dbCursor.getString(5),this.dbCursor.getString(6));
+                       (this.dbCursor.getString(1)),(this.dbCursor.getString(2)),
+                        this.dbCursor.getString(5),
+                        this.dbCursor.getString(6),
+                        this.dbCursor.getString(7) );
 
 
                 mClusterManager.addItem(m);

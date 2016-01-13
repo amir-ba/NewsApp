@@ -29,10 +29,11 @@ public class MyItem implements ClusterItem {
     private String snippet;
     private String Text;
 private  String Place;
+private  String Date;
     private   double Lat;
     private   double Lon;
 
-     public MyItem(double lat, double lng, String title, String snippet,String place,String text) {
+     public MyItem(double lat, double lng, String title, String snippet,String place,String text,String date) {
         this.title = title;
         this.snippet = snippet;
         mPosition = new LatLng(lat, lng);
@@ -40,6 +41,7 @@ this.Lat = lat;
         this.Lon=lng;
 this.Place = place;
 this.Text = text;
+this.Date = date;
 
 
     }
@@ -95,5 +97,12 @@ this.Text = text;
     }
     public void setText(String text) {
         this.Text = text;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+    public void setDate(String date) {
+        this.Text = date;
     }
 }

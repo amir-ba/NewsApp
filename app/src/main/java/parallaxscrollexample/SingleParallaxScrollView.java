@@ -20,22 +20,19 @@ public class SingleParallaxScrollView extends Activity {
         Intent intent = getIntent(); // gets the previously created intent
         String headline = intent.getStringExtra("headline"); // will return "FirstKeyValue"
         String text = intent.getStringExtra("text"); // will return "FirstKeyValue"
+        String date = intent.getStringExtra("date"); // will return "FirstKeyValue"
+        String place = intent.getStringExtra("place"); // will return "FirstKeyValue"
        // String secondKeyName= v.getStringExtra("secondKeyName"); // will return "SecondKeyValue"
         TextView t = (TextView) findViewById(R.id.article_title);
         TextView t2 = (TextView) findViewById(R.id.article_text);
+        TextView t3 = (TextView) findViewById(R.id.article_date);
+        TextView t4 = (TextView) findViewById(R.id.article_place);
         t.setText(headline);
         t2.setText(text);
+        t3.setText(date);
+        t4.setText(place);
 	}
 	
 
 
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.action_github) {
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/nirhart/ParallaxScroll"));
-			startActivity(browserIntent);
-		}
-		return true;
-	}
 }

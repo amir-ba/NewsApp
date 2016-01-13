@@ -4,32 +4,83 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:parallax_factor="1.9"
-    tools:context="parallaxscrollexample.SingleParallaxScrollView" >
+    tools:context="parallaxscrollexample.SingleParallaxScrollView"
+    android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:background="#ffffff">
 
         <TextView
             android:id="@+id/article_title"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@drawable/item_background"
-            android:gravity="center"
+            android:gravity="left"
             android:text="PARALLAXED"
-            android:textSize="50sp"
-            tools:ignore="HardcodedText" />
+            android:textSize="26sp"
+            tools:ignore="HardcodedText"
+            android:typeface="sans"
+            android:paddingStart="20dp"
+            android:paddingTop="110dp"
+            android:paddingEnd="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textIsSelectable="false"
+          />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="5dp"
+    android:background="#ffffff">
 
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum"
+            android:textSize="15sp"
+            android:background="@android:color/white"
+
+            tools:ignore="HardcodedText"
+            android:textIsSelectable="true"
+            android:id="@+id/article_place"
+            android:layout_alignParentTop="true"
+            android:padding="5dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum"
+            android:textSize="15sp"
+            android:background="@android:color/white"
+            android:padding="5dp"
+            tools:ignore="HardcodedText"
+            android:textIsSelectable="true"
+            android:id="@+id/article_date"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/article_place"
+            android:textStyle="italic"
+            android:textColor="#727272" />
+</RelativeLayout>
         <TextView
             android:id="@+id/article_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. 	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-            android:textSize="26sp"
-            android:background="@android:color/white"
-            android:padding="5dp"
-            tools:ignore="HardcodedText" />
+            android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit,"
+             android:textSize="20sp"
+            android:padding="10dp"
+            tools:ignore="HardcodedText"
+            android:textIsSelectable="true"
+            android:textColor="@android:color/black"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:autoText="true"
+            android:background="#ffffff" />
     </LinearLayout>
 
 </com.nirhart.parallaxscroll.views.ParallaxScrollView>

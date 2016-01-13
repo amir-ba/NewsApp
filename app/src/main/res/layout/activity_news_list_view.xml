@@ -3,12 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:id="@android:id/empty"
+        android:layout_height="match_parent"
+        android:padding="18dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="@string/empty_list_alert"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        android:gravity="center_vertical|center_horizontal" />
     <ListView
         android:id="@+id/lisst"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#ffffff" />
+         android:fastScrollAlwaysVisible="false" />
     <ListView
         android:id="@+id/lisst1"
         android:layout_width="match_parent"
@@ -16,4 +28,19 @@
         android:layout_alignParentTop="true"
         android:visibility="invisible"
         />
+    <ListView
+        android:id="@+id/lisst2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:visibility="invisible"
+        />
+    <ListView
+        android:id="@+id/lisst3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:visibility="invisible"
+        />
+
 </RelativeLayout>

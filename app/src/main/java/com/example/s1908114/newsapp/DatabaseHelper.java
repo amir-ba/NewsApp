@@ -11,21 +11,21 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static String DB_PATH;
     private static String DB_PATH_PREFIX = "/data/data/";
     private static String DB_PATH_SUFFIX = "/databases/";
     private static String DB_NAME = "News_db.db";
-    public static String TITLE = "headline";
-    public static String SNIPPET="category" ;
-    public static String LAT="lat" ;
-    public static String LON="lon" ;
+
     private SQLiteDatabase myDataBase;
     private final Context myContext;
     public static String TABLE_NAME = "NewsTable";
@@ -73,14 +73,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (directory.exists() == false) {
             directory.mkdir();
         }
-        OutputStream dbOut = new FileOutputStream(DB_PATH);
+        OutputStream dbOutbefore = new FileOutputStream(DB_PATH);
+        Writer dbOut = new OutputStreamWriter( dbOutbefore, "UTF-8");
+        BufferedWriter writer = new BufferedWriter(dbOut);
         byte[] buffer = new byte[1024];
-        int length;
+         int length;
         while ((length = assetsDB.read(buffer)) > 0) {
-            dbOut.write(buffer, 0, length);
+            dbOutbefore.write(buffer,0,length);
+
         }
-        dbOut.flush();
-        dbOut.close();
+        writer.flush();
+        writer.close();
     }
 
     public void openDataBase() throws SQLException {
