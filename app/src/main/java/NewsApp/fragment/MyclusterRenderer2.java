@@ -1,6 +1,7 @@
 package NewsApp.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 
 import com.example.s1908114.newsapp.MyItem;
 import com.example.s1908114.newsapp.R;
@@ -68,6 +69,16 @@ class MyclusterRenderer2 extends DefaultClusterRenderer<MyItem> {
 
         //start clustering if at least 2 items overlap cluster.getSize() > 1 && MainFragment.zoom <5
         return  cluster.getSize() > 0 ;
+    }
+@Override
+    protected int getColor(int clusterSize) {
+        final float hueRange = 20;
+        final float sizeRange = 300;
+        final float size = Math.min(clusterSize, sizeRange);
+        final float hue = (sizeRange - size) * (sizeRange - size) / (sizeRange * sizeRange) * hueRange;
+        return Color.HSVToColor(new float[]{
+                hue, 1f, .6f
+        });
     }
 
 }

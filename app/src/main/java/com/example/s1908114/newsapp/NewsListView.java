@@ -37,11 +37,9 @@ public class NewsListView extends Fragment {
 
         View rootView = inflater.inflate(R.layout.activity_news_list_view,container,false);
          ListView listv = (ListView) rootView.findViewById(R.id.lisst);
-         ListView listv2 = (ListView) rootView.findViewById(R.id.lisst1);
-         ListView listv3 = (ListView) rootView.findViewById(R.id.lisst2);
-         ListView listv4 = (ListView) rootView.findViewById(R.id.lisst3);
 
-         queryDataFromDatabase(listv, listv2, listv3, listv4);
+
+         queryDataFromDatabase(listv);
          return rootView;
 
     }
@@ -49,7 +47,7 @@ public class NewsListView extends Fragment {
 
 
 
-    public void queryDataFromDatabase(final ListView  listv,final ListView  listv2,final ListView  listv3,final ListView  listv4) {
+    public void queryDataFromDatabase(final ListView  listv ) {
           List<String> list_headline = new ArrayList<String>();
            List<String> list_text = new ArrayList<String>();
        List<String> list_date = new ArrayList<String>();
@@ -91,22 +89,18 @@ data.add(datum);
          ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(),
                 R.layout.news_list_view_item, list_headline);
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this.getActivity(),
+        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this.getActivity(),
                 R.layout.news_list_view_text, list_text);
 
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this.getActivity(),
+       final ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this.getActivity(),
                 R.layout.news_list_view_date, list_date);
-        ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this.getActivity(),
+       final  ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this.getActivity(),
                 R.layout.news_list_view_place, list_place);
         SimpleAdapter  adapter5 = new SimpleAdapter (this.getActivity(),data,
                 R.layout.news_list_view_item1, new String[] {"title", "place"},
                 new int[] {R.id.listitem1,
                         R.id.listitem2}) ;
-         listv4.setAdapter(adapter4);
-        listv3.setAdapter(adapter3);
-        listv2.setAdapter(adapter2);
 
-      // listv.setAdapter(adapter);
         listv.setAdapter(adapter5);
         for(  int i=0; i<   listv.getCount() ; i++){
 
@@ -129,12 +123,12 @@ String ss = obj1.get("place");
 
                  HashMap<String, String> obj = (HashMap<String, String>) listv.getAdapter().getItem(position);
                   intent.putExtra("headline", obj.get("title"));
-                 intent.putExtra("text", String.valueOf(listv2.getItemAtPosition((int) (long) id)));
-                 intent.putExtra("date", String.valueOf(listv3.getItemAtPosition((int) (long) id)));
-                 intent.putExtra("place", String.valueOf(listv4.getItemAtPosition((int) (long) id)));
+                  intent.putExtra("text", String.valueOf(adapter2.getItem(position)));
+                  intent.putExtra("date", String.valueOf(adapter3.getItem(position)));
+                  intent.putExtra("place", String.valueOf(adapter4.getItem(position)));
                  startActivity(intent);
                  // intent.putExtra("text", "SecondKeyValue");
-                 Toast.makeText(getActivity(), String.valueOf(listv3.getItemAtPosition((int) (long) id)), Toast.LENGTH_SHORT).show();
+          //       Toast.makeText(getActivity(), String.valueOf(listv3.getItemAtPosition((int) (long) id)), Toast.LENGTH_SHORT).show();
 
              }
          });

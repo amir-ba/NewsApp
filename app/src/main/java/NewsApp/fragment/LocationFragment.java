@@ -60,7 +60,6 @@ public class LocationFragment extends Fragment  {
             + "where NewsTable.category=? or NewsTable.category=?" +
             " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
     final int LOCATION_REQUEST = 1340;
-    public Marker lastOpenned = null;
 
       public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -75,51 +74,8 @@ public class LocationFragment extends Fragment  {
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
       MainFragment.mClusterManager.setRenderer(new MyclusterRenderer2(getActivity().getApplicationContext(), mMap, MainFragment.mClusterManager));
-         // MainFragment. mClusterManager.getClusterMarkerCollection().setOnInfoWindowAdapter(new MycustomClusterAdapter(getActivity().getLayoutInflater()));
           mMap.setOnMarkerClickListener(MainFragment.mClusterManager);
-/*
-          MainFragment. mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
-              @Override
 
-              public boolean onClusterClick(final Cluster<MyItem> cluster) {
-
-                  NewsListViewFromMap.list_headline = new ArrayList<>();
-
-                  NewsListViewFromMap.list_text = new ArrayList<>();
-                  for (MyItem item : cluster.getItems()) {
-                      //    Toast.makeText(getActivity(), (String) Integer.toString(cluster.getSize()),
-                      //             Toast.LENGTH_LONG).show();
-                      NewsListViewFromMap.list_headline.add(item.getSnippet());
-                      NewsListViewFromMap.list_text.add(item.getText());
-                      NewsListViewFromMap.list_date.add(item.getText());
-                      NewsListViewFromMap.list_place.add(item.getText());
-                  }
-                  FragmentManager fm = getFragmentManager();
-                  Fragment a = fm.findFragmentByTag("FragmentLoc");
-                  FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-                  fab.hide();
-                  //     fm.beginTransaction().replace(R.id.content_frame, new NewsListViewFromMap(),"list").addToBackStack("list")
-                  Fragment fragment = new NewsListViewFromMap();
-                  fm.beginTransaction().replace(R.id.content_frame, fragment, "list")
-                          .addToBackStack("list")
-               //    .hide(LocationFragment.this)
-                  .commit();
-
-
-//                getFragmentManager().executePendingTransactions();
-
-
-                  // fm.beginTransaction().remove(fm.getFragment()).commit();
-
-
-                  //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-//                                cluster.getPosition(), (float) Math.floor(mMap
-                  //                             .getCameraPosition().zoom + 1)), 300,
-                  //              null);
-                  return true;
-              }
-          });
-*/
           if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,   mlocListener);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100000, 10,  mlocListener);
@@ -135,7 +91,6 @@ public class LocationFragment extends Fragment  {
     private LocationListener mlocListener = new LocationListener() {
         @Override
         public void onLocationChanged (Location location){
-            //     System.out.println(a);
             if (location != null) {
                 mMap.setMyLocationEnabled(true);
                 mMap.clear();
@@ -143,42 +98,20 @@ public class LocationFragment extends Fragment  {
                 MainFragment.mClusterManager.clearItems();
                 double lat = location.getLatitude();
                 double lng = location.getLongitude();
+
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.removeUpdates(mlocListener);
                     locationManager = null;
                 }
+
               Location loc = new Location("L");
-      //          loc.setLatitude(lat);
-       //         loc.setLongitude(lng);
                 LatLng latLng = new LatLng(lat, lng);
-                Circle circle = mMap.addCircle(new CircleOptions().center(latLng).radius(200 * 100).fillColor(Color.parseColor("#6603A9F4")).strokeColor(Color.parseColor("#6603A9F4")));
+                Circle circle = mMap.addCircle(new CircleOptions().center(latLng).radius(20 * 1000).fillColor(Color.parseColor("#3303A9F4")).strokeColor(Color.parseColor("#3303A9F4")));
                 setUpDatabase(query, loc);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 7));
 
                 //  System.out.println(lat);
-               // mMap.clear();
-
-          //       Toast.makeText(getActivity(), "Location " + lat + "," + lng, Toast.LENGTH_SHORT).show();
-             //   Marker aa = mMap.addMarker(new MarkerOptions().position(latLng).title("Title").snippet("Snippet")
-               //         .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_location)));
-             //   Collection col =MainFragment.mClusterManager.getClusterMarkerCollection();
-          //  Collection col =MainFragment.My/. ;
-              //  for(Object i : col){
-
-            //       col.iterator().next().;
-
-               // }
-
-           //    Collection a = MainFragment.mClusterManager.get    MainFragment.mClusterManager.get
-
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,7));
-              //  mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
-
-            //    CameraUpdateFactory.zoomTo(8);
-
-                // Zoom in the Google Map
-
-                //  Toast.makeText(getActivity(), "Location " + lat+","+lng,Toast.LENGTH_SHORT).show();
-                //   Toast.makeText(getActivity(), "Location " + coordinate.latitude+","+coordinate.longitude,Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(getActivity(), "Location " + lat+","+lng,Toast.LENGTH_SHORT).show();
 
             } else {
                  Toast.makeText(getActivity(), "Location off", Toast.LENGTH_SHORT).show();

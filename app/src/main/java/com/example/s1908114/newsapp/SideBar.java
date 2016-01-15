@@ -52,6 +52,7 @@ public  Fragment fragment;
 
 
         actionbar = getSupportActionBar() ;
+
   //     CalculateActionBar(this.getApplicationContext());
 
 
@@ -123,20 +124,12 @@ public  Fragment fragment;
              int ss = (getFragmentManager().getBackStackEntryCount());  }
         if((getFragmentManager().findFragmentByTag("list1") !=null)&& getFragmentManager().findFragmentByTag("list1").isVisible()){
             FloatingActionButton fab = (FloatingActionButton) this.findViewById(R.id.fab);
-//int g =   getFragmentManager().getBackStackEntryAt(1).getId();
-//String g1 =   getFragmentManager().getBackStackEntryAt(1).getName();
-  //          fmm.popBackStack();
-    //        FragmentManager fm = getFragmentManager();
-      //      Fragment ac = fm.findFragmentByTag("FragmentLoc");
-        //    fmm.beginTransaction().show(ac).commit();
-          //  System.out.println(g1);           fmm.popBackStack(      null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fab.show();
            // getFragmentManager().popBackStack();
-           // getFragmentManager().beginTransaction().show().commit();
         }  if( (getFragmentManager().findFragmentByTag("list") !=null)&&getFragmentManager().findFragmentByTag("list").isVisible()){
             FloatingActionButton fab = (FloatingActionButton) this.findViewById(R.id.fab);
             fab.show();
-           // getFragmentManager().popBackStack();
+
 
         }else {
             super.onBackPressed();

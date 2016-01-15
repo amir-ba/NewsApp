@@ -32,10 +32,11 @@ public class NewsListViewFromMap extends Fragment {
 
         View rootView = inflater.inflate(R.layout.activity_news_list_view,container,false);
          ListView listv = (ListView) rootView.findViewById(R.id.lisst);
-         ListView listv2 = (ListView) rootView.findViewById(R.id.lisst1);
-         ListView listv3 = (ListView) rootView.findViewById(R.id.lisst2);
-         ListView listv4 = (ListView) rootView.findViewById(R.id.lisst3);
-         queryDataFromDatabase(listv, listv2,listv3, listv4);
+       //  ListView listv2 = (ListView) rootView.findViewById(R.id.lisst1);
+       //  ListView listv3 = (ListView) rootView.findViewById(R.id.lisst2);
+         //ListView listv4 = (ListView) rootView.findViewById(R.id.lisst3);
+       //  queryDataFromDatabase(listv, listv2,listv3, listv4);
+         queryDataFromDatabase(listv);
         FragmentManager fm = getFragmentManager();
 listv.setEmptyView(rootView.findViewById(android.R.id.empty));
        // listv.setEmptyView(rootView.findViewById(R.id.list_alert));
@@ -47,20 +48,20 @@ listv.setEmptyView(rootView.findViewById(android.R.id.empty));
 
 
 
-    public void queryDataFromDatabase(final ListView  listv,final ListView  listv2,final ListView  listv3,final ListView  listv4) {
+    public void queryDataFromDatabase(final ListView  listv) {
 
          ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(),
                 R.layout.news_list_view_item,  list_headline);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this.getActivity(),
+      final  ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this.getActivity(),
                 R.layout.news_list_view_text,  list_text);
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this.getActivity(),
+      final  ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this.getActivity(),
                 R.layout.news_list_view_date,   list_date);
-        ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this.getActivity(),
+       final  ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this.getActivity(),
                 R.layout.news_list_view_place, list_place);
 //if (adapter==null){ listv.setVisibility(View.VISIBLE);}
-        listv4.setAdapter(adapter4);
-        listv3.setAdapter(adapter3);
-        listv2.setAdapter(adapter2);
+      //  listv4.setAdapter(adapter4);
+       // listv3.setAdapter(adapter3);
+        //listv2.setAdapter(adapter2);
 
         listv.setAdapter(adapter);
 
@@ -70,13 +71,13 @@ listv.setEmptyView(rootView.findViewById(android.R.id.empty));
 
                 Intent intent = new Intent(getActivity(), SingleParallaxScrollView.class);
                 intent.putExtra("headline", String.valueOf(listv.getItemAtPosition((int) (long) id)));
-                intent.putExtra("text", String.valueOf(listv2.getItemAtPosition((int) (long) id)));
-                intent.putExtra("date", String.valueOf(listv3.getItemAtPosition((int) (long) id)));
-                intent.putExtra("place", String.valueOf(listv4.getItemAtPosition((int) (long) id)));
+                intent.putExtra("text", String.valueOf(adapter2.getItem(position)));
+                intent.putExtra("date", String.valueOf(adapter3.getItem(position)));
+                intent.putExtra("place", String.valueOf(adapter4.getItem(position)));
 
                 startActivity(intent);
                 // intent.putExtra("text", "SecondKeyValue");
-                Toast.makeText(getActivity(), String.valueOf(listv3.getItemAtPosition((int) (long) id)), Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getActivity(), String.valueOf(listv3.getItemAtPosition((int) (long) id)), Toast.LENGTH_SHORT).show();
 
             }
         });
