@@ -40,6 +40,7 @@ public class SideBar extends AppCompatActivity
     public static boolean IsTypeList = false;
     public static String[] MenuFilter;
 public  Fragment fragment;
+    public static  String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,8 @@ public  Fragment fragment;
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
+        category="all";
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.content_frame, new MainFragment(), "Fragment1") .commit();
 
@@ -177,6 +180,7 @@ public   void CreateFragment() {
                 FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
                 fab.show();
                 IsTypeList=false;
+
                   FragmentManager fm = getFragmentManager();
                 fm.beginTransaction().replace(R.id.content_frame,   fragment, "Fragment1" ).addToBackStack("Fragment1").commit();            return true;
 
@@ -185,7 +189,8 @@ public   void CreateFragment() {
         switch (id){
             case R.id.action_listviewview:
                 IsTypeList=true;
-                FragmentManager fm = getFragmentManager();
+                MainFragment.list_values.clear();
+                 FragmentManager fm = getFragmentManager();
                 FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 fab.hide();
                 fm.beginTransaction().replace(R.id.content_frame, new NewsListView(),"FragmentList") .commit();
@@ -212,6 +217,7 @@ fab.hide();
         if (id == R.id.nav_Home) {
             CreateFragment();
             MenuFilter = new String[]{"Politics", "Business", "Sports", "Science and Technology", "National"};
+              category = "all";
 
             fn.beginTransaction().replace(R.id.content_frame,fragment,"FragmentHome").commit();
             actionbar.setTitle("All News");
@@ -220,6 +226,7 @@ fab.hide();
             actionbar.setTitle("News Near Me");
 
         }   else if (id == R.id.nav_Politics) {
+            category = "politics";
 
             CreateFragment();
 
@@ -232,18 +239,21 @@ fab.hide();
 
             MenuFilter =     new String[]{"Business"} ;
 
+            category = "business";
 
             fn.beginTransaction().replace(R.id.content_frame,  fragment,"FragmentBusiness").commit();
             actionbar.setTitle("Business");
         } else if (id == R.id.nav_SocCul) {
             CreateFragment();
             MenuFilter =    new String[]{"Education"} ;
+            category = "social";
 
             fn.beginTransaction().replace(R.id.content_frame,  fragment,"FragmentNational").commit();
             actionbar.setTitle("Social & Cultural");
         } else if (id == R.id.nav_SciTech) {
             CreateFragment();
             MenuFilter = new String[]{"Science and Technology"} ;
+            category = "science";
 
             fn.beginTransaction().replace(R.id.content_frame,  fragment,"Fragmentscience").commit();
             actionbar.setTitle("Science & Technology");
@@ -252,6 +262,7 @@ fab.hide();
         } else if (id == R.id.nav_Sport) {
             CreateFragment();
             MenuFilter =     new String[]{"Sports"} ;
+            category = "sports";
 
             fn.beginTransaction().replace(R.id.content_frame,  fragment,"Fragmentsports").commit();
             actionbar.setTitle("Sports");

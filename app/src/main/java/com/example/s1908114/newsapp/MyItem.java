@@ -21,19 +21,17 @@ import java.util.ArrayList;
  */
 public class MyItem implements ClusterItem {
     private final  LatLng mPosition ;
- //   private   LatLng mPosition;
- //   private final String title;
-  //   private final String snippet;
     private long id;
     private String title;
     private String snippet;
     private String Text;
-private  String Place;
-private  String Date;
+    private  String Place;
+    private  String Date;
+    private  String Category;
     private   double Lat;
     private   double Lon;
 
-     public MyItem(double lat, double lng, String title, String snippet,String place,String text,String date) {
+     public MyItem(double lat, double lng, String title, String snippet,String place,String text,String date, String category) {
         this.title = title;
         this.snippet = snippet;
         mPosition = new LatLng(lat, lng);
@@ -42,6 +40,7 @@ this.Lat = lat;
 this.Place = place;
 this.Text = text;
 this.Date = date;
+this.Category = category;
 
 
     }
@@ -105,4 +104,8 @@ this.Date = date;
     public void setDate(String date) {
         this.Text = date;
     }
+    public String getCategory() {
+        return Category;
+    }
+
 }

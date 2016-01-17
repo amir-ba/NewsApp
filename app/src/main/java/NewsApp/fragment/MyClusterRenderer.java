@@ -1,9 +1,11 @@
 package NewsApp.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 
 import com.example.s1908114.newsapp.MyItem;
 import com.example.s1908114.newsapp.R;
+import com.example.s1908114.newsapp.SideBar;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -20,6 +22,9 @@ import com.google.maps.android.ui.IconGenerator;
 
 class MyClusterRenderer extends DefaultClusterRenderer<MyItem> {
 private Context cntxt;
+    int Hue;
+
+
     public MyClusterRenderer(Context context, GoogleMap map,
                              ClusterManager<MyItem> clusterManager) {
         super(context, map, clusterManager);
@@ -42,8 +47,6 @@ private Context cntxt;
     super.onBeforeClusterRendered(cluster, markerOptions);
 
 
-     //     for (MyItem item : cluster.getItems()) {   IconGenerator iconFactory = new IconGenerator(cntxt);   addIcon(iconFactory, item.getPlace(), item.getPosition()); }
-       //  for (MyItem item : cluster.getItems()){            markerOptions.title(  item.getPlace());        }
      }
 
     @Override
@@ -55,8 +58,7 @@ private Context cntxt;
     @Override
     protected void onClusterRendered(Cluster<MyItem> cluster, Marker marker) {
         super.onClusterRendered(cluster, marker);
-//marker.showInfoWindow();
-        //here you have access to the marker itself
+         //here you have access to the marker itself
     }
     @Override
     protected boolean shouldRenderAsCluster(Cluster<MyItem> cluster) {
@@ -65,5 +67,35 @@ private Context cntxt;
 
            return true;
     }
+    @Override
+    protected int getColor(int clusterSize) {
+        String cat =SideBar.category ;
 
+        switch (cat ){
+            case "all" : Hue =4;break;
+            case "politics": Hue = 50;break;
+            case "business": Hue =150 ;break;
+            case "social": Hue =200 ;break;
+            case "science": Hue =250 ;break;
+            case "sports": Hue = 300;
+
+        }
+        final float hueRange = Hue;
+        final float sizeRange = 300;
+        final float size = Math.min(clusterSize, sizeRange);
+        final float hue = (sizeRange - size) * (sizeRange - size) / (sizeRange * sizeRange) * hueRange;
+        return Color.HSVToColor(new float[]{
+                hue, 1f, .6f
+        });
+    }
 }
+//yellow 50
+//green 150
+//blue  200
+// G 250
+//purple 300
+//orangee
+//90 150
+//200
+//300
+//

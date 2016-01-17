@@ -1,84 +1,80 @@
 package com.example.s1908114.newsapp;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import NewsApp.fragment.CustomListItemViewAdapter;
+import NewsApp.fragment.MainFragment;
 import parallaxscrollexample.SingleParallaxScrollView;
 
 public class NewsListView extends Fragment {
     SQLiteDatabase database = null;
     Cursor dbCursor;
     DatabaseHelper dbHelper = new DatabaseHelper(this.getActivity());
+     public    ListView listv  ;
+    private  List<List<String>> list_values = MainFragment.list_values;
 
+    public   String query = "SELECT headline , maintext, dates , place , category  FROM NewsTable "
+        + "where NewsTable.category=? or NewsTable.category=?" +
+        " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?  or NewsTable.category=?;";
     @Override
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.activity_news_list_view,container,false);
-         ListView listv = (ListView) rootView.findViewById(R.id.lisst);
+        listv = (ListView) rootView.findViewById(R.id.listView1);
+        if (list_values.isEmpty()){
+         queryDataFromDatabase(listv,query);
+        }
 
-
-         queryDataFromDatabase(listv);
+          ArrayAdapter adap = new CustomListItemViewAdapter(this.getActivity(), list_values);
+        listv.setAdapter(adap);
+        click();
          return rootView;
 
     }
 
 
-
-
-    public void queryDataFromDatabase(final ListView  listv ) {
-          List<String> list_headline = new ArrayList<String>();
-           List<String> list_text = new ArrayList<String>();
-       List<String> list_date = new ArrayList<String>();
-       List<String> list_place = new ArrayList<String>();
-        List<Map<String, String>> data = new ArrayList<Map<String, String>> ();
-
+    public void queryDataFromDatabase(final ListView  listv ,String query) {
+        list_values =   new ArrayList<List<String>>();
         try {
 
             database = dbHelper.getDataBase();
 
-            dbCursor = database.rawQuery("SELECT headline , maintext, dates , place FROM NewsTable "
-                    + "where NewsTable.category=? or NewsTable.category=?" +
-                    " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?  or NewsTable.category=?;",
+            dbCursor = database.rawQuery(query,
                     SideBar.MenuFilter);
             dbCursor.moveToFirst();
-            int index = dbCursor.getColumnIndex("headline");
-             while (!dbCursor.isAfterLast()) {
-                 List<String> item = new ArrayList<String>();
-                 Map<String, String> datum = new HashMap<String, String>(2);
-                 String record = dbCursor.getString(index);
-                String recordtext = dbCursor.getString(1);
-                String recorddate = dbCursor.getString(2);
-                String recordplace = dbCursor.getString(3);
-                datum.put("title", record);
-                    datum.put("place", recordplace);
+            while (!dbCursor.isAfterLast()) {
+                List<String> news_item = new ArrayList<>();
+                String headline = dbCursor.getString(dbCursor.getColumnIndex("headline"));
+                String maintext = dbCursor.getString(dbCursor.getColumnIndex("maintext"));
+                String date = dbCursor.getString(dbCursor.getColumnIndex("dates"));
+                String place = dbCursor.getString(dbCursor.getColumnIndex("place"));
+                String category = dbCursor.getString(dbCursor.getColumnIndex("category"));
+                news_item.add(headline);
+                news_item.add(maintext);
+                news_item.add(date);
+                news_item.add(place);
+                news_item.add(category);
 
-                  list_headline.add(record);
-                 list_text.add(recordtext);
-                 list_date.add(recorddate);
-                 list_place.add(recordplace);
-data.add(datum);
+                list_values.add(news_item);
+
                 dbCursor.moveToNext();
             }
         } finally {
@@ -86,52 +82,27 @@ data.add(datum);
                 dbHelper.close();
             }
         }
-         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(),
-                R.layout.news_list_view_item, list_headline);
 
-        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this.getActivity(),
-                R.layout.news_list_view_text, list_text);
 
-       final ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this.getActivity(),
-                R.layout.news_list_view_date, list_date);
-       final  ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this.getActivity(),
-                R.layout.news_list_view_place, list_place);
-        SimpleAdapter  adapter5 = new SimpleAdapter (this.getActivity(),data,
-                R.layout.news_list_view_item1, new String[] {"title", "place"},
-                new int[] {R.id.listitem1,
-                        R.id.listitem2}) ;
+    }
+    public void click() {
+        listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        listv.setAdapter(adapter5);
-        for(  int i=0; i<   listv.getCount() ; i++){
+                Intent intent = new Intent(getActivity(), SingleParallaxScrollView.class);
 
-            HashMap<String, String> obj1 = (HashMap<String, String>) listv.getAdapter().getItem(i);
-String ss = obj1.get("place");
-             switch(  ss ) {
-                case "Munich":
-                 //   View dd = listv.getChildAt(i);
-                   //     dd.setBackgroundColor(Color.red(4));
+
+                List<String> obj = (List<String>) listv.getAdapter().getItem(position);
+                intent.putExtra("headline", obj.get(0));
+                intent.putExtra("text", obj.get(1));
+                intent.putExtra("date", obj.get(2));
+                intent.putExtra("place", obj.get(3));
+                startActivity(intent);
+                //       Toast.makeText(getActivity(), String.valueOf(listv3.getItemAtPosition((int) (long) id)), Toast.LENGTH_SHORT).show();
 
             }
-       }
-
-         listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-             @Override
-             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                 Intent intent = new Intent(getActivity(), SingleParallaxScrollView.class);
-
-
-                 HashMap<String, String> obj = (HashMap<String, String>) listv.getAdapter().getItem(position);
-                  intent.putExtra("headline", obj.get("title"));
-                  intent.putExtra("text", String.valueOf(adapter2.getItem(position)));
-                  intent.putExtra("date", String.valueOf(adapter3.getItem(position)));
-                  intent.putExtra("place", String.valueOf(adapter4.getItem(position)));
-                 startActivity(intent);
-                 // intent.putExtra("text", "SecondKeyValue");
-          //       Toast.makeText(getActivity(), String.valueOf(listv3.getItemAtPosition((int) (long) id)), Toast.LENGTH_SHORT).show();
-
-             }
-         });
+        });
     }
 
      public void onClickAddDataRecord(View view) {
@@ -143,3 +114,4 @@ String ss = obj1.get("place");
      return true;
     }
 }
+

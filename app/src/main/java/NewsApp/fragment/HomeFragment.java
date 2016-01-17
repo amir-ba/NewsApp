@@ -28,16 +28,9 @@ import android.widget.Toast;
 import com.example.s1908114.newsapp.DatabaseHelper;
 import com.example.s1908114.newsapp.MyItem;
 import com.example.s1908114.newsapp.NewsListView;
-import com.example.s1908114.newsapp.NewsListViewFromMap;
-import com.example.s1908114.newsapp.R;
+ import com.example.s1908114.newsapp.R;
 import com.example.s1908114.newsapp.SideBar;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +49,7 @@ private LocationManager locationManager;
 private String provider;
 final String[] LOCATION_PERMS = {Manifest.permission.ACCESS_FINE_LOCATION};
 public String query=" SELECT   NewsTable.id, NewsTable.category as category ,NewsTable.headline as headline," +
-        " NewsTable.lat as lat ,NewsTable.lon as lon,NewsTable.place, NewsTable.maintext , NewsTable.dates\n" +
+        " NewsTable.lat as lat ,NewsTable.lon as lon,NewsTable.place, NewsTable.maintext , NewsTable.dates , category \n" +
         "            FROM  NewsTable    "
         + "where NewsTable.category=? or NewsTable.category=?" +
         " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
@@ -124,18 +117,11 @@ private LocationListener mlocListener = new LocationListener() {
 
 };
     private void setUpDatabase(String qu, Location loc ,int KM) {
+        List<List<String>> listview = MainFragment.list_values;
+        listview.clear();
         try {
             dbHelper = new DatabaseHelper(this.getActivity());
-            NewsListViewFromMap.list_headline = new ArrayList<>();
 
-            NewsListViewFromMap.list_text = new ArrayList<>();
-            NewsListViewFromMap.list_date= new ArrayList<>();
-            NewsListViewFromMap.list_place= new ArrayList<>();
-            List<Map<String, String>> data = new ArrayList<Map<String, String>> ();
-            SimpleAdapter  adapter5 = new SimpleAdapter (this.getActivity(),data,
-                    R.layout.news_list_view_item1, new String[] {"title", "place"},
-                    new int[] {R.id.listitem1,
-                            R.id.listitem2}) ;
 
             database = dbHelper.getDataBase();
 
@@ -147,18 +133,22 @@ private LocationListener mlocListener = new LocationListener() {
 
                    Location mloc= new Location("M");
                    mloc.setLongitude(Double.valueOf( this.dbCursor.getString(4)));
-                        mloc.setLatitude(Double.valueOf(this.dbCursor.getString(3)));
-                      float distance = loc.distanceTo(mloc);
+                   mloc.setLatitude(Double.valueOf(this.dbCursor.getString(3)));
+                   float distance = loc.distanceTo(mloc);
 
                       if (distance <= (1000*KM)) {
-                          NewsListViewFromMap.list_headline.add(this.dbCursor.getString(2));
-                          NewsListViewFromMap.list_text.add(this.dbCursor.getString(6));
-                          NewsListViewFromMap.list_date.add(this.dbCursor.getString(7));
-                          NewsListViewFromMap.list_place.add(this.dbCursor.getString(5));
+                          List<String> news_item = new ArrayList<>();
+
+                          news_item.add(this.dbCursor.getString(2));
+                          news_item.add(this.dbCursor.getString(6));
+                          news_item.add(this.dbCursor.getString(7));
+                          news_item.add(this.dbCursor.getString(5));
+                          news_item.add(this.dbCursor.getString(8));
+                          listview.add(news_item);
                       }
                 dbCursor.moveToNext();
             }
-            ((SideBar)getActivity()).replacefragment(new NewsListViewFromMap(),"listL");
+            ((SideBar)getActivity()).replacefragment(new NewsListView(),"listL");
 
         } finally
 

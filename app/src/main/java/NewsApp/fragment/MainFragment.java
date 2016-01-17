@@ -2,19 +2,14 @@ package NewsApp.fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.s1908114.newsapp.DatabaseHelper;
 import com.example.s1908114.newsapp.MyItem;
 import com.example.s1908114.newsapp.NewsListView;
-import com.example.s1908114.newsapp.NewsListViewFromMap;
 import com.example.s1908114.newsapp.R;
 import com.example.s1908114.newsapp.SideBar;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,8 +29,7 @@ import com.google.maps.android.kml.KmlPolygon;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
-import parallaxscrollexample.SingleParallaxScrollView;
+import java.util.List;
 
 /**
  * Created by s1908114 on 27.11.2015.
@@ -50,9 +44,11 @@ public static MyItem clickedClusterItem;
     DatabaseHelper dbHelper;
     private CameraPosition cp;
     public  static  GoogleMap mMap;
+    public  static   List<List<String>> list_values  = new ArrayList<List<String>>();
+    ;
   //  private   float zoom;
     public String query=" SELECT   NewsTable.id, NewsTable.category as category ,NewsTable.headline as headline," +
-          " CapitalsTable.lat as lat ,CapitalsTable.lon as lon, NewsTable.place ,NewsTable.maintext , NewsTable.dates \n" +
+          " CapitalsTable.lat as lat ,CapitalsTable.lon as lon, NewsTable.place ,NewsTable.maintext , NewsTable.dates , NewsTable.category \n" +
           "            FROM  NewsTable   JOIN CapitalsTable\n" +
           "            ON NewsTable.statecode=CapitalsTable.code   "
           + "where NewsTable.category=? or NewsTable.category=?" +
@@ -125,35 +121,26 @@ public static MyItem clickedClusterItem;
            @Override
 
            public boolean onClusterClick(final Cluster<MyItem> cluster) {
-
+            list_values.clear();
                clickedcluster = cluster;
-               NewsListViewFromMap.list_headline = new ArrayList<>();
-
-               NewsListViewFromMap.list_text = new ArrayList<>();
-               NewsListViewFromMap.list_date= new ArrayList<>();
-               NewsListViewFromMap.list_place= new ArrayList<>();
                for (MyItem item : cluster.getItems()) {
+                   List<String> news_item = new ArrayList<>();
 
-                   NewsListViewFromMap.list_headline.add(item.getSnippet());
-                   NewsListViewFromMap.list_text.add(item.getText());
-                   NewsListViewFromMap.list_date.add(item.getDate());
-                   NewsListViewFromMap.list_place.add(item.getPlace());
+                  news_item.add(item.getSnippet());
+                   news_item.add(item.getText());
+                   news_item.add(item.getDate());
+                   news_item.add(item.getPlace());
+                   news_item.add(item.getCategory());
+                    list_values .add(news_item);
+
                }
                FragmentManager fm = getFragmentManager();
              Fragment a = fm.findFragmentByTag("FragmentLoc");
                FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
                fab.hide();
-          //     fm.beginTransaction().replace(R.id.content_frame, new NewsListViewFromMap(),"list").addToBackStack("list")
-               ((SideBar)getActivity()).replacefragment(new NewsListViewFromMap(),"list");
+                ((SideBar)getActivity()).replacefragment(new NewsListView(),"list");
 
 
-               // fm.beginTransaction().remove(fm.getFragment()).commit();
-
-
-               //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-//                                cluster.getPosition(), (float) Math.floor(mMap
-               //                             .getCameraPosition().zoom + 1)), 300,
-               //              null);
                return true;
            }
        });
@@ -183,7 +170,7 @@ public static MyItem clickedClusterItem;
                        (this.dbCursor.getString(1)),(this.dbCursor.getString(2)),
                         this.dbCursor.getString(5),
                         this.dbCursor.getString(6),
-                        this.dbCursor.getString(7) );
+                        this.dbCursor.getString(7), this.dbCursor.getString(8) );
 
 
                 mClusterManager.addItem(m);
@@ -210,13 +197,12 @@ public static MyItem clickedClusterItem;
     private void setUpMap() {
         try {
 
-            KmlLayer kmlLayer = new KmlLayer(getMap(), R.raw.germ, getActivity().getApplicationContext());
+            KmlLayer kmlLayer = new KmlLayer(getMap(), R.raw.levv, getActivity().getApplicationContext());
             kmlLayer.addLayerToMap();
-       //     moveCameraToKml(kmlLayer);
 
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                    new LatLng(50.669155, 10.746248), 5));
-          //  mMap.setMyLocationEnabled(true);
+             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                     new LatLng(50.669155, 10.746248), 5));
+       //  mMap.setMyLocationEnabled(true);
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             mMap.getUiSettings().
                     setMapToolbarEnabled(false);
@@ -238,28 +224,7 @@ public static MyItem clickedClusterItem;
     }
 
 
-    private void moveCameraToKml(KmlLayer kmlLayer) {
-        //Retrieve the first container in the KML layer
-        KmlContainer container = kmlLayer.getContainers().iterator().next();
-        //Retrieve a nested container within the first container
-        container = container.getContainers().iterator().next();
-        //Retrieve the first placemark in the nested container
-        KmlPlacemark placemark = container.getPlacemarks().iterator().next();
-        //Retrieve a polygon object in a placemark
-        KmlPolygon polygon = (KmlPolygon) placemark.getGeometry();
-        //Create LatLngBounds of the outer coordinates of the polygon
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (LatLng latLng : polygon.getOuterBoundaryCoordinates()) {
-            builder.include(latLng);
-        }
-        if (cp == null) {
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(builder.build().getCenter(), 5));
-            cp = mMap.getCameraPosition();
-        } else {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                    new LatLng(50.051877, 12.741517), 5));
-        }
-    }
+
     private void setUpDatabase(   ) {
         try {
             markerFilter();
@@ -274,17 +239,6 @@ public static MyItem clickedClusterItem;
 
 }
 
-
-//public class MainFragment extends Fragment {
-
-
-//   @Override
-//  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//
-//   View rootView = inflater.inflate(R.layout.fragment_home,container,false);
-//       return rootView;
-//   }
-//}
-
+ 
 
 

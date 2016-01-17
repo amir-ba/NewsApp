@@ -68,7 +68,7 @@ class MyclusterRenderer2 extends DefaultClusterRenderer<MyItem> {
     protected boolean shouldRenderAsCluster(Cluster<MyItem> cluster) {
 
         //start clustering if at least 2 items overlap cluster.getSize() > 1 && MainFragment.zoom <5
-        return  cluster.getSize() > 0 ;
+        return  true ;
     }
 @Override
     protected int getColor(int clusterSize) {

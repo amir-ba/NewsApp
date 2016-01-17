@@ -21,8 +21,7 @@ import android.widget.Toast;
 
 import com.example.s1908114.newsapp.DatabaseHelper;
 import com.example.s1908114.newsapp.MyItem;
-import com.example.s1908114.newsapp.NewsListViewFromMap;
-import com.example.s1908114.newsapp.R;
+ import com.example.s1908114.newsapp.R;
 import com.example.s1908114.newsapp.SideBar;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -55,7 +54,7 @@ public class LocationFragment extends Fragment  {
 
       final String[] LOCATION_PERMS = {Manifest.permission.ACCESS_FINE_LOCATION};
     public String query=" SELECT   NewsTable.id, NewsTable.category as category ,NewsTable.headline as headline," +
-            " NewsTable.lat as lat ,NewsTable.lon as lon,NewsTable.place, NewsTable.maintext , NewsTable.dates\n" +
+            " NewsTable.lat as lat ,NewsTable.lon as lon,NewsTable.place, NewsTable.maintext , NewsTable.dates , category \n" +
             "            FROM  NewsTable    "
             + "where NewsTable.category=? or NewsTable.category=?" +
             " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
@@ -157,7 +156,7 @@ public class LocationFragment extends Fragment  {
                         (this.dbCursor.getString(1)),
                         (this.dbCursor.getString(2)),
                         this.dbCursor.getString(5),
-                        this.dbCursor.getString(6), this.dbCursor.getString(7));
+                        this.dbCursor.getString(6), this.dbCursor.getString(7),this.dbCursor.getString(8));
 
                 MainFragment.mClusterManager.addItem(m);
 
