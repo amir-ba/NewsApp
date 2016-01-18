@@ -30,7 +30,7 @@ public class NewsListView extends Fragment {
     DatabaseHelper dbHelper = new DatabaseHelper(this.getActivity());
      public    ListView listv  ;
     private  List<List<String>> list_values = MainFragment.list_values;
-    public   String query = "SELECT headline , maintext, dates , place , category  FROM NewsTable "
+    public   String query = "SELECT headline , maintext, dates , place , category, lat, lon  FROM NewsTable "
         + "where NewsTable.category=? or NewsTable.category=?" +
         " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?  or NewsTable.category=?;";
     @Override
@@ -68,11 +68,15 @@ public class NewsListView extends Fragment {
                 String date = dbCursor.getString(dbCursor.getColumnIndex("dates"));
                 String place = dbCursor.getString(dbCursor.getColumnIndex("place"));
                 String category = dbCursor.getString(dbCursor.getColumnIndex("category"));
+                String lat = dbCursor.getString(dbCursor.getColumnIndex("lat"));
+                String lon = dbCursor.getString(dbCursor.getColumnIndex("lon"));
                 news_item.add(headline);
                 news_item.add(maintext);
                 news_item.add(date);
                 news_item.add(place);
                 news_item.add(category);
+                news_item.add(lat);
+                news_item.add(lon);
 
                 list_values.add(news_item);
 
@@ -99,6 +103,9 @@ public class NewsListView extends Fragment {
                 intent.putExtra("text", obj.get(1));
                 intent.putExtra("date", obj.get(2));
                 intent.putExtra("place", obj.get(3));
+                intent.putExtra("lat", obj.get(5));
+                intent.putExtra("lon", obj.get(6));
+
                 startActivity(intent);
                 //       Toast.makeText(getActivity(), String.valueOf(listv3.getItemAtPosition((int) (long) id)), Toast.LENGTH_SHORT).show();
 
