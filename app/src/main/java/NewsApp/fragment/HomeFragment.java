@@ -45,15 +45,16 @@ Cursor dbCursor;
 DatabaseHelper dbHelper;
 
 
-private LocationManager locationManager;
-private String provider;
-final String[] LOCATION_PERMS = {Manifest.permission.ACCESS_FINE_LOCATION};
-public String query=" SELECT   NewsTable.id, NewsTable.category as category ,NewsTable.headline as headline," +
+    private LocationManager locationManager;
+    private String provider;
+    final String[] LOCATION_PERMS = {Manifest.permission.ACCESS_FINE_LOCATION};
+    public String query=" SELECT   NewsTable.id, NewsTable.category as category ,NewsTable.headline as headline," +
         " NewsTable.lat as lat ,NewsTable.lon as lon,NewsTable.place, NewsTable.maintext , NewsTable.dates , category \n" +
         "            FROM  NewsTable    "
         + "where NewsTable.category=? or NewsTable.category=?" +
         " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
-final int LOCATION_REQUEST = 1340;
+    final int LOCATION_REQUEST = 1340;
+    public static boolean locationOn=false;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -87,7 +88,7 @@ private LocationListener mlocListener = new LocationListener() {
         if (location != null) {
                   locationManager.removeUpdates(mlocListener);
                 locationManager = null;
-             setUpDatabase(query, location,200);
+             setUpDatabase(query, location,10);
 
         } else {
             Toast.makeText(getActivity(), "Location off", Toast.LENGTH_SHORT).show();
@@ -117,8 +118,9 @@ private LocationListener mlocListener = new LocationListener() {
 
 };
     private void setUpDatabase(String qu, Location loc ,int KM) {
+        MainFragment.list_values.clear();
         List<List<String>> listview = MainFragment.list_values;
-        listview.clear();
+        locationOn=true;
         try {
             dbHelper = new DatabaseHelper(this.getActivity());
 

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import NewsApp.fragment.CustomListItemViewAdapter;
+import NewsApp.fragment.HomeFragment;
 import NewsApp.fragment.MainFragment;
 import parallaxscrollexample.SingleParallaxScrollView;
 
@@ -29,7 +30,6 @@ public class NewsListView extends Fragment {
     DatabaseHelper dbHelper = new DatabaseHelper(this.getActivity());
      public    ListView listv  ;
     private  List<List<String>> list_values = MainFragment.list_values;
-
     public   String query = "SELECT headline , maintext, dates , place , category  FROM NewsTable "
         + "where NewsTable.category=? or NewsTable.category=?" +
         " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?  or NewsTable.category=?;";
@@ -39,10 +39,11 @@ public class NewsListView extends Fragment {
 
         View rootView = inflater.inflate(R.layout.activity_news_list_view,container,false);
         listv = (ListView) rootView.findViewById(R.id.listView1);
-        if (list_values.isEmpty()){
-         queryDataFromDatabase(listv,query);
-        }
+        listv.setEmptyView(rootView.findViewById(R.id.emptyElement));
 
+     //   if (list_values.isEmpty() ){
+       //  queryDataFromDatabase();
+       // }
           ArrayAdapter adap = new CustomListItemViewAdapter(this.getActivity(), list_values);
         listv.setAdapter(adap);
         click();
@@ -51,7 +52,7 @@ public class NewsListView extends Fragment {
     }
 
 
-    public void queryDataFromDatabase(final ListView  listv ,String query) {
+    public void queryDataFromDatabase() {
         list_values =   new ArrayList<List<String>>();
         try {
 

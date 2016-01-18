@@ -156,11 +156,17 @@ public   void CreateFragment() {
         fab.show();
 
     } else {
-          fragment = new NewsListView();
+        NewsListView  dd = new NewsListView();
+
+        fragment= dd;
+dd.queryDataFromDatabase();
         fab.hide();
 
     }
  }
+    public void setdata(NewsListView d){
+        d.queryDataFromDatabase();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -168,10 +174,7 @@ public   void CreateFragment() {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-      //  if (id == R.id.action_settings) {
-        //    return true;
-        //}
+
         switch (id){
             case R.id.action_mapview:
                 MainFragment.mMap= null;
@@ -189,11 +192,13 @@ public   void CreateFragment() {
         switch (id){
             case R.id.action_listviewview:
                 IsTypeList=true;
-                MainFragment.list_values.clear();
-                 FragmentManager fm = getFragmentManager();
+               // MainFragment.list_values.clear();
+  CreateFragment();
+                        FragmentManager fm = getFragmentManager();
+              //  setdata((NewsListView)fragment);
                 FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-fab.hide();
-                fm.beginTransaction().replace(R.id.content_frame, new NewsListView(),"FragmentList") .commit();
+                fab.hide();
+                fm.beginTransaction().replace(R.id.content_frame, fragment) .commit();
 
           //      startActivity(new Intent(this,NewsListView.class));
                 return true;
@@ -215,9 +220,9 @@ fab.hide();
         int id = item.getItemId();
 
         if (id == R.id.nav_Home) {
-            CreateFragment();
             MenuFilter = new String[]{"Politics", "Business", "Sports", "Science and Technology", "National"};
               category = "all";
+            CreateFragment();
 
             fn.beginTransaction().replace(R.id.content_frame,fragment,"FragmentHome").commit();
             actionbar.setTitle("All News");
@@ -227,42 +232,41 @@ fab.hide();
 
         }   else if (id == R.id.nav_Politics) {
             category = "politics";
-
-            CreateFragment();
-
              MenuFilter =new String[]{"Politics"} ;
+            CreateFragment();
 
            fn.beginTransaction().replace(R.id.content_frame, fragment,"FragmentPolitc").commit();
             actionbar.setTitle("Politics");
         } else if (id == R.id.nav_Business) {
-            CreateFragment();
 
             MenuFilter =     new String[]{"Business"} ;
-
             category = "business";
+            CreateFragment();
 
             fn.beginTransaction().replace(R.id.content_frame,  fragment,"FragmentBusiness").commit();
             actionbar.setTitle("Business");
         } else if (id == R.id.nav_SocCul) {
-            CreateFragment();
             MenuFilter =    new String[]{"Education"} ;
             category = "social";
+            CreateFragment();
 
             fn.beginTransaction().replace(R.id.content_frame,  fragment,"FragmentNational").commit();
             actionbar.setTitle("Social & Cultural");
         } else if (id == R.id.nav_SciTech) {
-            CreateFragment();
+
             MenuFilter = new String[]{"Science and Technology"} ;
             category = "science";
+            CreateFragment();
 
             fn.beginTransaction().replace(R.id.content_frame,  fragment,"Fragmentscience").commit();
             actionbar.setTitle("Science & Technology");
 
 
         } else if (id == R.id.nav_Sport) {
-            CreateFragment();
+
             MenuFilter =     new String[]{"Sports"} ;
             category = "sports";
+            CreateFragment();
 
             fn.beginTransaction().replace(R.id.content_frame,  fragment,"Fragmentsports").commit();
             actionbar.setTitle("Sports");

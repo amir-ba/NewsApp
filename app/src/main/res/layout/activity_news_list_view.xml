@@ -5,7 +5,20 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#FFFFFF">
-
+    <TextView
+        android:id="@+id/emptyElement"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="NO NEWS AVAILABLE!"
+        android:textColor="#e13f3f"
+        android:textSize="24.0sp"
+        android:visibility="gone"
+        android:textIsSelectable="false"
+        android:textStyle="bold"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:gravity="center_horizontal" />
     <ListView
         android:id="@+id/listView1"
         android:layout_width="fill_parent"
