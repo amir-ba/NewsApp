@@ -7,8 +7,4 @@
     android:paddingBottom="5dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-<<<<<<< HEAD
     android:paddingTop="5dp"/><!-- From: file:/C:/Amir/NewsApp1/app/library/GoogleMapsUtilities/res/layout/webview.xml -->
-=======
-    android:paddingTop="5dp"/><!-- From: file:/D:/Meshec/Skola/Mobile%20Cartography/Project/GIT_NewsApp/app/library/GoogleMapsUtilities/res/layout/webview.xml -->
->>>>>>> origin/HEAD
