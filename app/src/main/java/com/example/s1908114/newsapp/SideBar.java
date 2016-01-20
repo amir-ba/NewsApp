@@ -182,8 +182,15 @@ dd.queryDataFromDatabase();
                 fab.show();
                 IsTypeList=false;
 
-                  FragmentManager fm = getFragmentManager();
-                fm.beginTransaction().replace(R.id.content_frame,   fragment, "Fragment1" ).addToBackStack("Fragment1").commit();            return true;
+                FragmentManager fm = getFragmentManager();
+                fm.beginTransaction().replace(R.id.content_frame, fragment, "Fragment1" ).addToBackStack("Fragment1").commit();            return true;
+
+
+
+            case R.id.action_about:
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+
 
 
         }
