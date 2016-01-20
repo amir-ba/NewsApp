@@ -51,10 +51,8 @@ public  Fragment fragment;
        setSupportActionBar(toolbar);
 
 
-
         actionbar = getSupportActionBar() ;
-
-  //     CalculateActionBar(this.getApplicationContext());
+   //     CalculateActionBar(this.getApplicationContext());
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

@@ -68,7 +68,7 @@ private Context cntxt;
            return true;
     }
     @Override
-    protected int getColor(int clusterSize) {
+     protected int getColor(int clusterSize) {
         String cat =SideBar.category ;
 
         switch (cat ){

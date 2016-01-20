@@ -39,11 +39,11 @@ public class CustomListItemViewAdapter extends ArrayAdapter  {
         maintext.setText(news.get(3));
         TextView color = (TextView) customView.findViewById(R.id.color);
         switch (news.get(4)){
-            case "Politics": color.setBackgroundColor(Color.parseColor("#99ffd500"));break;
-            case "Business": color.setBackgroundColor(Color.parseColor("#9900b55b"));break;
-            case "Sports": color.setBackgroundColor( Color.parseColor("#99b500a6"));break;
-            case "Science and Technology": color.setBackgroundColor(Color.parseColor("#991b00b5"));break;
-            case "Education": color.setBackgroundColor(Color.parseColor("#990079b5"));break;
+            case "Politics": color.setBackgroundColor(Color.parseColor("#8cf1c40f"));break;
+            case "Business": color.setBackgroundColor(Color.parseColor("#8c27ae60"));break;
+            case "Sports": color.setBackgroundColor( Color.parseColor("#8c9b59b6"));break;
+            case "Science and Technology": color.setBackgroundColor(Color.parseColor("#8c1F3A93"));break;
+            case "Education": color.setBackgroundColor(Color.parseColor("#8c3498db"));break;
         }
         return customView;
     }

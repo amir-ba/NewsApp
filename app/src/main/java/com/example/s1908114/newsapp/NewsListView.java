@@ -103,8 +103,8 @@ public class NewsListView extends Fragment {
                 intent.putExtra("text", obj.get(1));
                 intent.putExtra("date", obj.get(2));
                 intent.putExtra("place", obj.get(3));
-                intent.putExtra("lat", obj.get(5));
-                intent.putExtra("lon", obj.get(6));
+           //     intent.putExtra("lat", obj.get(5));
+             //   intent.putExtra("lon", obj.get(6));
 
                 startActivity(intent);
                 //       Toast.makeText(getActivity(), String.valueOf(listv3.getItemAtPosition((int) (long) id)), Toast.LENGTH_SHORT).show();
