@@ -49,7 +49,8 @@ DatabaseHelper dbHelper;
     private String provider;
     final String[] LOCATION_PERMS = {Manifest.permission.ACCESS_FINE_LOCATION};
     public String query=" SELECT   NewsTable.id, NewsTable.category as category ,NewsTable.headline as headline," +
-        " NewsTable.lat as lat ,NewsTable.lon as lon,NewsTable.place, NewsTable.maintext , NewsTable.dates , category \n" +
+        " NewsTable.lat as lat ,NewsTable.lon as lon,NewsTable.place as place , NewsTable.maintext as maintext , NewsTable.dates as dates, " +
+            "category , image \n" +
         "            FROM  NewsTable    "
         + "where NewsTable.category=? or NewsTable.category=?" +
         " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
@@ -141,11 +142,15 @@ private LocationListener mlocListener = new LocationListener() {
                       if (distance <= (1000*KM)) {
                           List<String> news_item = new ArrayList<>();
 
-                          news_item.add(this.dbCursor.getString(2));
-                          news_item.add(this.dbCursor.getString(6));
-                          news_item.add(this.dbCursor.getString(7));
-                          news_item.add(this.dbCursor.getString(5));
-                          news_item.add(this.dbCursor.getString(8));
+                          news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("headline")));
+                          news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("maintext")));
+                          news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("dates")));
+                          news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("place")));
+                          news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("category")));
+
+                          news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("lat")));
+                          news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("lon")));
+                           news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("image")));
                           listview.add(news_item);
                       }
                 dbCursor.moveToNext();

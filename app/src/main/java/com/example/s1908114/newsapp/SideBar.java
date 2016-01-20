@@ -188,8 +188,8 @@ dd.queryDataFromDatabase();
 
 
             case R.id.action_about:
-                Intent intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
+              //  Intent intent = new Intent(this, AboutActivity.class);
+            //    startActivity(intent);
 
 
 

@@ -48,7 +48,7 @@ public static MyItem clickedClusterItem;
     ;
   //  private   float zoom;
     public String query=" SELECT   NewsTable.id, NewsTable.category as category ,NewsTable.headline as headline," +
-          " CapitalsTable.lat as lat ,CapitalsTable.lon as lon, NewsTable.place ,NewsTable.maintext , NewsTable.dates , NewsTable.category \n" +
+          " CapitalsTable.lat as lat ,CapitalsTable.lon as lon, NewsTable.place ,NewsTable.maintext , NewsTable.dates , NewsTable.category ,NewsTable.image \n" +
           "            FROM  NewsTable   JOIN CapitalsTable\n" +
           "            ON NewsTable.statecode=CapitalsTable.code   "
           + "where NewsTable.category=? or NewsTable.category=?" +
@@ -131,6 +131,11 @@ public static MyItem clickedClusterItem;
                    news_item.add(item.getDate());
                    news_item.add(item.getPlace());
                    news_item.add(item.getCategory());
+                   news_item.add(String.valueOf(item.getLat()));
+                   news_item.add(String.valueOf(item.getLon()));
+
+                   news_item.add(item.getUrl());
+
                     list_values .add(news_item);
 
                }
@@ -165,12 +170,16 @@ public static MyItem clickedClusterItem;
 
 
             while (!dbCursor.isAfterLast()) {
-                MyItem m = new MyItem(Double.valueOf(this.dbCursor.getString(3))
-                                      ,Double.valueOf(this.dbCursor.getString(4)),
-                       (this.dbCursor.getString(1)),(this.dbCursor.getString(2)),
+                MyItem m = new MyItem(
+                        Double.valueOf(this.dbCursor.getString(3))
+                        ,Double.valueOf(this.dbCursor.getString(4)),
+                       (this.dbCursor.getString(1)),
+                        (this.dbCursor.getString(2)),
                         this.dbCursor.getString(5),
                         this.dbCursor.getString(6),
-                        this.dbCursor.getString(7), this.dbCursor.getString(8) );
+                        this.dbCursor.getString(7),
+                        this.dbCursor.getString(8),
+                        this.dbCursor.getString(9) );
 
 
                 mClusterManager.addItem(m);

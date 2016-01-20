@@ -14,24 +14,86 @@
         android:background="#ffffff"
         android:weightSum="1">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+            android:id="@+id/article_imageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignBottom="@+id/article_title1"
+            android:layout_alignLeft="@+id/article_title1"
+            android:layout_alignRight="@+id/article_title1"
+            android:layout_alignTop="@+id/article_title1"
+            android:src="@drawable/ic_launcher"
+            android:drawSelectorOnTop="true"
+            android:visibility="visible"
+            android:backgroundTintMode="src_over"
+            android:background="@drawable/item_background" />
+
+
         <TextView
-            android:id="@+id/article_title"
+            android:id="@+id/article_title1"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@drawable/item_background"
-            android:gravity="left"
-            android:text="PARALLAXED"
+            android:gravity="bottom|left"
             android:textSize="26sp"
             tools:ignore="HardcodedText"
             android:typeface="sans"
             android:paddingStart="20dp"
-            android:paddingTop="110dp"
             android:paddingEnd="20dp"
-            android:textColor="@color/black"
+            android:textColor="#ffffff"
             android:textStyle="bold"
             android:textIsSelectable="false"
-          />
+            android:visibility="visible"
+            android:paddingBottom="15dp" />
 
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/article_title1">
+
+
+            <TextView
+                android:id="@+id/article_title_back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/article_title"
+                android:src="@drawable/ic_launcher"
+                android:visibility="visible"
+                android:background="#8c000000"
+                android:autoText="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignWithParentIfMissing="false"
+                android:layout_alignBottom="@+id/article_title"
+                android:layout_toLeftOf="@+id/article_title"
+                android:layout_alignRight="@+id/article_title"
+                android:layout_toRightOf="@+id/article_title"
+                android:layout_alignParentBottom="true" />
+            <TextView
+                android:id="@+id/article_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom|left"
+                android:text="PARALLAXED"
+                android:textSize="26sp"
+                tools:ignore="HardcodedText"
+                android:typeface="sans"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:textIsSelectable="false"
+                android:visibility="visible"
+                android:paddingBottom="15dp"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentLeft="false" />
+        </RelativeLayout>      </RelativeLayout>
         <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -88,6 +150,7 @@
                 android:layout_alignParentEnd="true"
                  />
         </RelativeLayout>
+
         <TextView
             android:id="@+id/article_text"
             android:layout_width="match_parent"
@@ -96,7 +159,7 @@
              android:textSize="20sp"
             android:padding="10dp"
             tools:ignore="HardcodedText"
-            android:textIsSelectable="true"
+            android:textIsSelectable="false"
             android:textColor="@android:color/black"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"

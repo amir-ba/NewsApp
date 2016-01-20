@@ -30,8 +30,9 @@ public class MyItem implements ClusterItem {
     private  String Category;
     private   double Lat;
     private   double Lon;
+    private   String Url;
 
-     public MyItem(double lat, double lng, String title, String snippet,String place,String text,String date, String category) {
+     public MyItem(double lat, double lng, String title, String snippet,String place,String text,String date, String category, String url) {
         this.title = title;
         this.snippet = snippet;
         mPosition = new LatLng(lat, lng);
@@ -41,6 +42,7 @@ this.Place = place;
 this.Text = text;
 this.Date = date;
 this.Category = category;
+this.Url = url;
 
 
     }
@@ -106,6 +108,12 @@ this.Category = category;
     }
     public String getCategory() {
         return Category;
+    }
+    public String getUrl() {
+        return Url;
+    }
+    public void setUrl(String url) {
+        this.Url = url;
     }
 
 }
