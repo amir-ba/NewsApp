@@ -173,23 +173,30 @@ dd.queryDataFromDatabase();
         int id = item.getItemId();
 
 
-        switch (id){
+        switch (id) {
             case R.id.action_mapview:
-                MainFragment.mMap= null;
+                MainFragment.mMap = null;
                 MainFragment.mClusterManager.clearItems();
                 MainFragment fragment = new MainFragment();
                 FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
                 fab.show();
-                IsTypeList=false;
+                IsTypeList = false;
 
                 FragmentManager fm = getFragmentManager();
-                fm.beginTransaction().replace(R.id.content_frame, fragment, "Fragment1" ).addToBackStack("Fragment1").commit();            return true;
-
+                fm.beginTransaction().replace(R.id.content_frame, fragment, "Fragment1").addToBackStack("Fragment1").commit();
+                return true;
+        }
+            switch (id){
 
 
             case R.id.action_about:
-              //  Intent intent = new Intent(this, AboutActivity.class);
-            //    startActivity(intent);
+                FragmentManager fm = getFragmentManager();
+                actionbar.setTitle("About");
+                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                fab.hide();
+                fm.beginTransaction().replace(R.id.content_frame, new AboutActivity(), "FragmentAbout" ).addToBackStack("FragmentAbout").commit();
+
+                return true;
 
 
 
