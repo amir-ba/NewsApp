@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewsApp</string>
+    <string name="app_name">Germany Today</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -8,4 +8,11 @@
     <string name="title_activity_maps">Map</string>
     <string name="action_mapview">Map View</string>
     <string name="action_listview">List View</string>
+    <string name="action_about">About</string>
+    <string name="empty_list_alert">No News available around you</string>
+    <string name="category_textdummy">Category</string>
+    <string name="maintext_textdummy">Lorem ipsum dolor sit amet, ius deserunt mnesarchum appellantur ea, nemore singulis in nam. Civibus appellantur eu cum. Ius ad nihil quidam. Et his mediocrem constituto, mea te solum quaerendum. Eripuit conceptam cu est. Omnis justo quodsi te quo, integre dolores qui ad, vis at homero convenire repudiandae. Partem ridens accusam eam id, eam aliquid volutpat salutatus ad. Est ad choro adipisci, an oportere conclusionemque sea. Eripuit vocibus blandit qui at, at sed illud viris quodsi. Sit at hinc summo, te vel propriae postulant. Vocent meliore veritus eam ei, id quaeque dolorum fabellas has, oratio denique similique usu et. Illum vidisse ea ius. Vis essent vulputate id. Facilis percipit recusabo mea in, eos an omittam eleifend vituperatoribus. Atqui ceteros ex nec. Probo augue duo et. Te eam eius quando luptatum, ad dictas ornatus duo. Vidit argumentum pro ad. Cu duo vero noluisse aliquando, in sea hinc epicuri appellantur, commodo denique consulatu est id. Exerci quodsi maluisset ea eam. Eu ius fierent expetendis, unum sonet eripuit in usu. Vim ut brute nostrud persequeris, vel ne iriure viderer. Et duis denique vim, ne justo aeque duo. Movet graeco disputando ad cum, purto eius ei pro, regione aliquam eruditi sed an. Putent scripserit eos an. Vel facete integre fierent ut, eam eligendi deseruisse interpretaris ei.</string>
+    <string name="image_textdisc">test</string>
+    <string name="splash">splash</string>
+    <string name="LOGO">LOGO</string>
 </resources>

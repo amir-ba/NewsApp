@@ -1,0 +1,170 @@
+<com.nirhart.parallaxscroll.views.ParallaxScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:parallax_factor="1.9"
+    tools:context="parallaxscrollexample.SingleParallaxScrollView"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#ffffff"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+            android:id="@+id/article_imageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignBottom="@+id/article_title1"
+            android:layout_alignLeft="@+id/article_title1"
+            android:layout_alignRight="@+id/article_title1"
+            android:layout_alignTop="@+id/article_title1"
+            android:src="@drawable/ic_launcher"
+            android:drawSelectorOnTop="true"
+            android:visibility="visible"
+            android:backgroundTintMode="src_over"
+            android:background="@drawable/item_background" />
+
+
+        <TextView
+            android:id="@+id/article_title1"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="bottom|left"
+            android:textSize="26sp"
+            tools:ignore="HardcodedText"
+            android:typeface="sans"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textIsSelectable="false"
+            android:visibility="visible"
+            android:paddingBottom="15dp" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/article_title1">
+
+
+            <TextView
+                android:id="@+id/article_title_back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/article_title"
+                android:src="@drawable/ic_launcher"
+                android:visibility="visible"
+                android:background="#8c000000"
+                android:autoText="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignWithParentIfMissing="false"
+                android:layout_alignBottom="@+id/article_title"
+                android:layout_toLeftOf="@+id/article_title"
+                android:layout_alignRight="@+id/article_title"
+                android:layout_toRightOf="@+id/article_title"
+                android:layout_alignParentBottom="true" />
+            <TextView
+                android:id="@+id/article_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom|left"
+                android:text="PARALLAXED"
+                android:textSize="26sp"
+                tools:ignore="HardcodedText"
+                android:typeface="sans"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:textIsSelectable="false"
+                android:visibility="visible"
+                android:paddingBottom="15dp"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentLeft="false" />
+        </RelativeLayout>      </RelativeLayout>
+        <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="5dp"
+    android:background="#ffffff">
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum"
+            android:textSize="15sp"
+            android:background="@android:color/white"
+
+            tools:ignore="HardcodedText"
+            android:textIsSelectable="true"
+            android:id="@+id/article_place"
+            android:layout_alignParentTop="true"
+            android:padding="5dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum"
+            android:textSize="15sp"
+            android:background="@android:color/white"
+            android:padding="5dp"
+            tools:ignore="HardcodedText"
+            android:textIsSelectable="true"
+            android:id="@+id/article_date"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/article_place"
+            android:textStyle="italic"
+            android:textColor="#727272" />
+
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="40dp"
+                android:id="@+id/imageButtonGoToMap"
+                android:layout_gravity="right"
+                android:background="@drawable/icon_location"
+                android:elevation="15dp"
+                android:adjustViewBounds="false"
+                android:layout_weight="1.60"
+                android:focusable="true"
+                android:padding="10dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                 />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/article_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit,"
+             android:textSize="20sp"
+            android:padding="10dp"
+            tools:ignore="HardcodedText"
+            android:textIsSelectable="false"
+            android:textColor="@android:color/black"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:autoText="true"
+            android:background="#ffffff" />
+    </LinearLayout>
+
+</com.nirhart.parallaxscroll.views.ParallaxScrollView>

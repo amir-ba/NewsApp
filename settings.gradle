@@ -1,1 +1,3 @@
-include ':app'
+include 'app',    ':app', ':app:library'
+include  ':app:library:GoogleMapsUtilities'
+// include 'app:library:ParallaxScroll'
