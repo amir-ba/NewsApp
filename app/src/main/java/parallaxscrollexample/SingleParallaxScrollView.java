@@ -39,6 +39,7 @@ public class SingleParallaxScrollView extends Activity {
         String text = intent.getStringExtra("text"); // will return "FirstKeyValue"
         String date = intent.getStringExtra("date"); // will return "FirstKeyValue"
         String place = intent.getStringExtra("place"); // will return "FirstKeyValue"
+        String cat = intent.getStringExtra("category"); // will return "FirstKeyValue"
         String url = intent.getStringExtra("image"); // will return "FirstKeyValue"
          TextView t = (TextView) findViewById(R.id.article_title);
 
@@ -46,6 +47,7 @@ public class SingleParallaxScrollView extends Activity {
         TextView t2 = (TextView) findViewById(R.id.article_text);
         TextView t3 = (TextView) findViewById(R.id.article_date);
         TextView t4 = (TextView) findViewById(R.id.article_place);
+        TextView tcat = (TextView) findViewById(R.id.article_cat);
         TextView t6 = (TextView) findViewById(R.id.article_title_back);
         ImageView t5 = (ImageView) findViewById(R.id.article_imageView);
        t.setText(headline);
@@ -54,6 +56,7 @@ public class SingleParallaxScrollView extends Activity {
           t2.setText(text);
         t3.setText(date);
         t4.setText(place);
+        tcat.setText(cat);
 
         ImageButton gotomap =  (ImageButton) findViewById(R.id.imageButtonGoToMap);
 

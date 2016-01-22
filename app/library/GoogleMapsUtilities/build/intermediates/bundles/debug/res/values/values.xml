@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Amir/NewsApp1/app/library/GoogleMapsUtilities/res/values/ids.xml -->
+    <!-- From: file:/I:/Juraj%20Murcko/MobileCartography/Project/GITHUB_files/app/library/GoogleMapsUtilities/res/values/ids.xml -->
     <eat-comment/>
     <item name="text" type="id"/>
-    <!-- From: file:/C:/Amir/NewsApp1/app/library/GoogleMapsUtilities/res/values/styles.xml -->
+    <!-- From: file:/I:/Juraj%20Murcko/MobileCartography/Project/GITHUB_files/app/library/GoogleMapsUtilities/res/values/styles.xml -->
     <eat-comment/>
     <style name="Bubble.TextAppearance.Dark" parent="android:TextAppearance.Medium">
         <item name="android:textSize">14sp</item>

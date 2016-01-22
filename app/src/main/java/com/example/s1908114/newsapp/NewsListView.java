@@ -106,6 +106,8 @@ public class NewsListView extends Fragment {
                 intent.putExtra("date", obj.get(2));
                 intent.putExtra("place", obj.get(3));
                 intent.putExtra("image", obj.get(7));
+                intent.putExtra("category", obj.get(4));
+
            //     intent.putExtra("lat", obj.get(5));
              //   intent.putExtra("lon", obj.get(6));
 
