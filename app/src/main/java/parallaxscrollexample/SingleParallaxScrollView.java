@@ -30,18 +30,18 @@ import java.net.URLConnection;
 
 public class SingleParallaxScrollView extends Activity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		setContentView(R.layout.scroll_one_parallax);
+        setContentView(R.layout.scroll_one_parallax);
         Intent intent = getIntent(); // gets the previously created intent
-     String headline = intent.getStringExtra("headline"); // will return "FirstKeyValue"
+        String headline = intent.getStringExtra("headline"); // will return "FirstKeyValue"
         String text = intent.getStringExtra("text"); // will return "FirstKeyValue"
         String date = intent.getStringExtra("date"); // will return "FirstKeyValue"
         String place = intent.getStringExtra("place"); // will return "FirstKeyValue"
         String cat = intent.getStringExtra("category"); // will return "FirstKeyValue"
         String url = intent.getStringExtra("image"); // will return "FirstKeyValue"
-         TextView t = (TextView) findViewById(R.id.article_title);
+        TextView t = (TextView) findViewById(R.id.article_title);
 
 
         TextView t2 = (TextView) findViewById(R.id.article_text);
@@ -50,37 +50,12 @@ public class SingleParallaxScrollView extends Activity {
         TextView tcat = (TextView) findViewById(R.id.article_cat);
         TextView t6 = (TextView) findViewById(R.id.article_title_back);
         ImageView t5 = (ImageView) findViewById(R.id.article_imageView);
-       t.setText(headline);
-         Picasso.with(getApplicationContext()).load(url)
-                 .into(t5);
-          t2.setText(text);
+        t.setText(headline);
+        Picasso.with(getApplicationContext()).load(url)
+                .into(t5);
+        t2.setText(text);
         t3.setText(date);
         t4.setText(place);
         tcat.setText(cat);
-
-        ImageButton gotomap =  (ImageButton) findViewById(R.id.imageButtonGoToMap);
-
-
-
-
-
-	}
-
-    private View.OnClickListener startListener = new View.OnClickListener() {
-        public void onClick(View v) {
-     //       Intent intent1 = new Intent(getApplicationContext(), MapArticleActivity.class);
-
-            Intent intent = getIntent();
-          //  intent1.putExtra("lat", intent.getStringExtra("lat"));
-          //  intent1.putExtra("lon", intent.getStringExtra("lon"));
-        String lon = intent.getStringExtra("lon");
-        //Toast.makeText( getApplicationContext(), lat, Toast.LENGTH_SHORT).show();
-         //   startActivity(intent1);
-
-
-
-        }
-    };
-
-
+    }
 }
