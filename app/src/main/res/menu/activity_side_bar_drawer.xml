@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_Home" android:icon="@android:drawable/ic_menu_gallery"
+        <item android:id="@+id/nav_Home" android:icon="@drawable/newspaper_list_icon"
             android:title="All News" />
 
         <item android:id="@+id/nav_Near" android:icon="@android:drawable/ic_menu_mylocation"
@@ -12,15 +12,15 @@
 
     <item android:title="Category">
         <menu>
-            <item android:id="@+id/nav_Politics" android:icon="@drawable/yellow"
+            <item android:id="@+id/nav_Politics" android:icon="@drawable/politics"
                 android:title="Politics" />
-            <item android:id="@+id/nav_Business" android:icon="@drawable/green"
+            <item android:id="@+id/nav_Business" android:icon="@drawable/business"
                 android:title="Business" />
-            <item android:id="@+id/nav_SocCul" android:icon="@drawable/blue"
+            <item android:id="@+id/nav_SocCul" android:icon="@drawable/society_culture"
                 android:title="Society and Culture" />
-            <item android:id="@+id/nav_SciTech" android:icon="@drawable/orange"
+            <item android:id="@+id/nav_SciTech" android:icon="@drawable/science_technology"
                 android:title="Science and Technology" />
-            <item android:id="@+id/nav_Sport" android:icon="@drawable/purple"
+            <item android:id="@+id/nav_Sport" android:icon="@drawable/sports"
                 android:title="Sport" />
         </menu>
     </item>

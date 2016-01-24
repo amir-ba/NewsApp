@@ -23,6 +23,9 @@ import com.google.maps.android.ui.IconGenerator;
 class MyClusterRenderer extends DefaultClusterRenderer<MyItem> {
 private Context cntxt;
     int Hue;
+    float Satr;
+    float Val;
+
 
 
     public MyClusterRenderer(Context context, GoogleMap map,
@@ -72,20 +75,22 @@ private Context cntxt;
         String cat =SideBar.category ;
 
         switch (cat ){
-            case "all" : Hue =4;break;
-            case "politics": Hue = 50;break;
-            case "business": Hue =150 ;break;
-            case "social": Hue =200 ;break;
-            case "science": Hue =250 ;break;
-            case "sports": Hue = 300;
+            case "all" : Hue =4;Satr=1;Val=0.6f;break;
+            case "politics": Hue = 120;Satr=0.88f;Val=0.74f;break;
+            case "business": Hue =218 ;Satr=0.75f;Val=0.95f;break;
+            case "social": Hue =310 ;Satr=0.85f;Val=0.95f;break;
+            case "science": Hue =28;Satr=0.91f;Val=0.94f ;break;
+            case "sports": Hue = 55;;Satr=0.84f;Val=0.89f;
 
         }
+
         final float hueRange = Hue;
         final float sizeRange = 300;
         final float size = Math.min(clusterSize, sizeRange);
         final float hue = (sizeRange - size) * (sizeRange - size) / (sizeRange * sizeRange) * hueRange;
         return Color.HSVToColor(new float[]{
-                hue, 1f, .6f
+               // hue, 1f, .6f
+                hue, Satr, Val
         });
     }
 }
