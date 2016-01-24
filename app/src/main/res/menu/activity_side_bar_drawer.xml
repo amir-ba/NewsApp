@@ -18,7 +18,7 @@
                 android:title="Business" />
             <item android:id="@+id/nav_SocCul" android:icon="@drawable/blue"
                 android:title="Society and Culture" />
-            <item android:id="@+id/nav_SciTech" android:icon="@drawable/blue_dark"
+            <item android:id="@+id/nav_SciTech" android:icon="@drawable/orange"
                 android:title="Science and Technology" />
             <item android:id="@+id/nav_Sport" android:icon="@drawable/purple"
                 android:title="Sport" />

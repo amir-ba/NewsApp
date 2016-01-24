@@ -37,7 +37,8 @@
         android:layout_toEndOf="@+id/imageView"
         android:visibility="visible"
         android:text="ddddddddddddd"
-        android:gravity="top" />
+        android:gravity="top"
+        android:textSize="18dp" />
 
     <TextView
         android:layout_width="wrap_content"

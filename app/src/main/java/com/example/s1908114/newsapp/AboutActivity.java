@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 public class AboutActivity extends Fragment {
 
@@ -15,6 +18,14 @@ public class AboutActivity extends Fragment {
 
         View rootView = inflater.inflate(R.layout.activity_about, container, false);
 
+       ImageView juay = (ImageView) rootView.findViewById(R.id.imageView3_juray);
+       ImageView amir = (ImageView) rootView.findViewById(R.id.fotoAmir);
+       ImageView rohini = (ImageView) rootView.findViewById(R.id.imageView);
+       ImageView vasilious = (ImageView) rootView.findViewById(R.id.imageView2_vasi);
+        Picasso.with(getActivity()).load(R.drawable.juraj)    .into(juay);
+        Picasso.with(getActivity()).load(R.drawable.amir)    .into(amir);
+        Picasso.with(getActivity()).load(R.drawable.rohini)    .into(rohini);
+        Picasso.with(getActivity()).load(R.drawable.vasilis)    .into(vasilious);
 
         return rootView;
     }

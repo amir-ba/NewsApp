@@ -62,6 +62,10 @@ public static MyItem clickedClusterItem;
         super.onResume();
 
        setUpMapIfNeeded();
+        if (mMap != null) {
+            mMap.clear();
+             onMapReady(getMap());
+        }
 
     }
      public void onStart() {
@@ -91,8 +95,7 @@ public static MyItem clickedClusterItem;
         setUpDatabase();
 
         mMap = googleMap;
-
-        setUpMap();
+         setUpMap();
 
     }
 

@@ -175,6 +175,7 @@ dd.queryDataFromDatabase();
 
         switch (id) {
             case R.id.action_mapview:
+
                 MainFragment.mMap = null;
                 MainFragment.mClusterManager.clearItems();
                 MainFragment fragment = new MainFragment();
@@ -190,6 +191,10 @@ dd.queryDataFromDatabase();
 
 
             case R.id.action_about:
+                if(actionbar.getTitle()=="About"){
+                    actionbar.setTitle("All News");
+
+                }
                 FragmentManager fm = getFragmentManager();
                 actionbar.setTitle("About");
                 FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -204,7 +209,12 @@ dd.queryDataFromDatabase();
         switch (id){
             case R.id.action_listviewview:
                 IsTypeList=true;
-               // MainFragment.list_values.clear();
+                if(actionbar.getTitle()=="About"){
+                    actionbar.setTitle("All News");
+
+                }
+
+                // MainFragment.list_values.clear();
   CreateFragment();
                         FragmentManager fm = getFragmentManager();
               //  setdata((NewsListView)fragment);
