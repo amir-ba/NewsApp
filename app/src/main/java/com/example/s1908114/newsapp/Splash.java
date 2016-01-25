@@ -8,6 +8,7 @@ import android.os.Handler;
 /**
  * Created by Amir on 16.12.2015.
  */
+// This Class creates the splash screen of the app
 public class Splash extends Activity {
     private static int SPLASH_TIME_OUT = 3000;
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,11 +16,6 @@ public class Splash extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spash);
         new Handler().postDelayed(new Runnable() {
-
-            /*
-             * Showing splash screen with a timer. This will be useful when you
-             * want to show case your app logo / company
-             */
 
             @Override
             public void run() {

@@ -18,17 +18,19 @@ import com.google.maps.android.ui.IconGenerator;
 /**
  * Created by Amir on 05.01.2016.
  */
-
+//CLASS TO OVERRIDE THE DEFAAULT CLUSTER CREATER  IN city VIEW
 class MyclusterRenderer2 extends DefaultClusterRenderer<MyItem> {
     private Context cntxt;
+
     public MyclusterRenderer2(Context context, GoogleMap map,
-                             ClusterManager<MyItem> clusterManager) {
+                              ClusterManager<MyItem> clusterManager) {
         super(context, map, clusterManager);
 
-        this.cntxt=context;
+        this.cntxt = context;
     }
 
     @Override
+    // set the snippet and title for items
     protected void onBeforeClusterItemRendered(MyItem item, MarkerOptions markerOptions) {
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_location));
 
@@ -39,38 +41,47 @@ class MyclusterRenderer2 extends DefaultClusterRenderer<MyItem> {
     }
 
     @Override
+    //override the before renderer of the clusters to get the popup text of city name on top
     protected void onBeforeClusterRendered(Cluster<MyItem> cluster, MarkerOptions markerOptions) {
 
-         super.onBeforeClusterRendered(cluster, markerOptions);
-             for (MyItem item : cluster.getItems()) {   IconGenerator iconFactorya = new IconGenerator(cntxt);  addIcon(iconFactorya, item.getPlace(), item.getPosition()); }
-      }
+        super.onBeforeClusterRendered(cluster, markerOptions);
+        for (MyItem item : cluster.getItems()) {
+            IconGenerator iconFactorya = new IconGenerator(cntxt);
+            addIcon(iconFactorya, item.getPlace(), item.getPosition());
+        }
+    }
+    // city name infowindows shown as marker
     private void addIcon(IconGenerator iconFactory, String text, LatLng position) {
         MarkerOptions markerOptions = new MarkerOptions().
                 icon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(text))).
                 position(position).
-                anchor(0.5f,2f);
+                anchor(0.5f, 2f);
 
         MainFragment.mMap.addMarker(markerOptions);
     }
+
     @Override
     protected void onClusterItemRendered(MyItem clusterItem, Marker marker) {
         super.onClusterItemRendered(clusterItem, marker);
 
         //here you have access to the marker itself
     }
+
     @Override
     protected void onClusterRendered(Cluster<MyItem> cluster, Marker marker) {
         super.onClusterRendered(cluster, marker);
-//marker.showInfoWindow();
-        //here you have access to the marker itself
+         //here you have access to the marker itself
     }
-    @Override
-    protected boolean shouldRenderAsCluster(Cluster<MyItem> cluster) {
 
+    @Override
+    // render all as clusters even with 1 item
+    protected boolean shouldRenderAsCluster(Cluster<MyItem> cluster) {
         //start clustering if at least 2 items overlap cluster.getSize() > 1 && MainFragment.zoom <5
-        return  true ;
+        return true;
     }
-@Override
+
+    @Override
+    //setting the color for the marker clusters based on there relevance
     protected int getColor(int clusterSize) {
         final float hueRange = 20;
         final float sizeRange = 300;

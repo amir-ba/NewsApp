@@ -21,9 +21,10 @@
         <activity
             android:name=".SideBar"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            >
         </activity>
-        <activity android:name="parallaxscrollexample.SingleParallaxScrollView" >
+        <activity android:name=".SingleParallaxScrollView" >
         </activity>
 
         <!--
@@ -46,8 +47,6 @@
         </intent-filter>
         </activity>
 
-        <activity android:name=".AboutActivity" >
-        </activity>
     </application>
 
 </manifest>

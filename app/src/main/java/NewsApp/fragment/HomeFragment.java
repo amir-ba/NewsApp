@@ -40,6 +40,7 @@ import java.util.Map;
 /**
  * Created by s1908114 on 27.11.2015.
  */
+//FRAGMENT FOR NEWS NEAR ME SHOWING THE NEWS AROUND YOU
 public class HomeFragment extends Fragment {
     SQLiteDatabase database;
     Cursor dbCursor;
@@ -56,16 +57,20 @@ public class HomeFragment extends Fragment {
             + "where NewsTable.category=? or NewsTable.category=?" +
             " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
     final int LOCATION_REQUEST = 1340;
+    // indicater for showing the seekbar
     public static boolean locationOn = false;
-
+    //initiater
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
+        //set the view
         View rootView = inflater.inflate(R.layout.activity_news_list_view, container, false);
+       // hide fab button
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.hide();
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
+        // create a location manager
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        // assign a location listener with GPS and Internet
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, mlocListener);
@@ -74,20 +79,22 @@ public class HomeFragment extends Fragment {
             this.requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
 
         }
+        // store the last known location and use it when there is no location
         LastKnownLoc = getLastKnownLocation();
-        //   Toast.makeText(getActivity(), "News in your 200 KM vicinity  ", Toast.LENGTH_SHORT).show();
+        //initiate the view
         return rootView;
     }
 
-
+    // create a location listener
     private LocationListener mlocListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            //     System.out.println(a);
-
+            // on location change add the closes articles to a list
             if (location != null) {
+                // stop listening to location until next move
                 locationManager.removeUpdates(mlocListener);
                 locationManager = null;
+                // get data from database based on distance to location and seekbar value
                 setUpDatabase(query, location, KM);
                 LastKnownLoc = location;
             } else {
@@ -117,21 +124,18 @@ public class HomeFragment extends Fragment {
         }
 
     };
-
+    // run the query and only keep records closer to position
     private void setUpDatabase(String qu, Location loc, int KM) {
         MainFragment.list_values.clear();
         List<List<String>> listview = MainFragment.list_values;
         locationOn = true;
         try {
+            //open database
             dbHelper = new DatabaseHelper(this.getActivity());
-
-
             database = dbHelper.getDataBase();
-
             dbCursor = database.rawQuery(qu, SideBar.MenuFilter);
-
             dbCursor.moveToFirst();
-
+            // get the list of nearest articles
             while (!dbCursor.isAfterLast()) {
 
                 Location mloc = new Location("M");
@@ -147,7 +151,6 @@ public class HomeFragment extends Fragment {
                     news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("dates")));
                     news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("place")));
                     news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("category")));
-
                     news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("lat")));
                     news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("lon")));
                     news_item.add(this.dbCursor.getString(dbCursor.getColumnIndex("image")));
@@ -155,18 +158,20 @@ public class HomeFragment extends Fragment {
                 }
                 dbCursor.moveToNext();
             }
+            // replace the fragment with the list view fragment
             ((SideBar) getActivity()).replacefragment(new NewsListView(), "listL");
 
         } finally
 
         {
+            //close the database if not used
             if (database != null) {
                 dbHelper.close();
             }
         }
 
     }
-
+    // get the last known lcation from the best location provider
     public Location getLastKnownLocation() {
         List<String> providers = locationManager.getProviders(true);
         Location bestLocation = null;

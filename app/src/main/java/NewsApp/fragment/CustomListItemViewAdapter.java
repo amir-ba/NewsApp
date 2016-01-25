@@ -39,7 +39,7 @@ public class CustomListItemViewAdapter extends ArrayAdapter  {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater dbinflater = LayoutInflater.from(getContext());
-
+        //set the list's text and color for the category in list view
         View customView = dbinflater.inflate(R.layout.news_list_view_item, parent, false);
         List<String> news = this.result.get(position);
         TextView headline = (TextView) customView.findViewById(R.id.heading);
@@ -48,12 +48,12 @@ public class CustomListItemViewAdapter extends ArrayAdapter  {
         category.setText(news.get(2));
         TextView maintext = (TextView) customView.findViewById(R.id.maintext);
         maintext.setText(news.get(3));
+        // set the article images
           image = (ImageView) customView.findViewById(R.id.imageView);
-        Picasso.with(getContext()).load(news.get(7))
-                  .resize(80, 80)
-                .placeholder(R.mipmap.newspaper_list_icon)
-                .into(image);
+        Picasso.with(getContext()).load(news.get(7)).resize(80, 80).placeholder(R.mipmap.newspaper_list_icon)
+                                  .into(image);
         TextView color = (TextView) customView.findViewById(R.id.color);
+        // defining the color for the elements corner in the list- defining categories
         switch (news.get(4)){
             case "Politics": color.setBackgroundColor(Color.parseColor("#8c19be19"));break;
             case "Business": color.setBackgroundColor(Color.parseColor("#8c3b79f4"));break;

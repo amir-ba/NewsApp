@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:parallax_factor="1.9"
-    tools:context="parallaxscrollexample.SingleParallaxScrollView"
+    tools:context="com.example.s1908114.newsapp.SingleParallaxScrollView"
     android:background="#ffffff">
 
     <LinearLayout

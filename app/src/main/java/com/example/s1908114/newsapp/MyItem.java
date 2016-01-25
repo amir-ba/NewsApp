@@ -19,30 +19,30 @@ import java.util.ArrayList;
 /**
  * Created by Amir on 05.01.2016.
  */
+// CLASS DESCRIBING THE ELEMENTS ON THE MAP
 public class MyItem implements ClusterItem {
-    private final  LatLng mPosition ;
-    private long id;
+    private final LatLng mPosition;
     private String title;
     private String snippet;
     private String Text;
-    private  String Place;
-    private  String Date;
-    private  String Category;
-    private   double Lat;
-    private   double Lon;
-    private   String Url;
+    private String Place;
+    private String Date;
+    private String Category;
+    private double Lat;
+    private double Lon;
+    private String Url;
 
-     public MyItem(double lat, double lng, String title, String snippet,String place,String text,String date, String category, String url) {
+    public MyItem(double lat, double lng, String title, String snippet, String place, String text, String date, String category, String url) {
         this.title = title;
         this.snippet = snippet;
         mPosition = new LatLng(lat, lng);
-this.Lat = lat;
-        this.Lon=lng;
-this.Place = place;
-this.Text = text;
-this.Date = date;
-this.Category = category;
-this.Url = url;
+        this.Lat = lat;
+        this.Lon = lng;
+        this.Place = place;
+        this.Text = text;
+        this.Date = date;
+        this.Category = category;
+        this.Url = url;
 
 
     }
@@ -56,6 +56,7 @@ this.Url = url;
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -63,6 +64,7 @@ this.Url = url;
     public String getSnippet() {
         return snippet;
     }
+
     public void setSnippet(String snippet) {
         this.snippet = snippet;
     }
@@ -84,18 +86,19 @@ this.Url = url;
         this.Lon = Lon;
     }
 
-    //public void setSnippet(String snippet) {
-    //     this.snippet = snippet;
-    // }
+
     public String getPlace() {
         return Place;
     }
+
     public void setPlace(String Place) {
         this.Place = Place;
     }
+
     public String getText() {
         return Text;
     }
+
     public void setText(String text) {
         this.Text = text;
     }
@@ -103,15 +106,19 @@ this.Url = url;
     public String getDate() {
         return Date;
     }
+
     public void setDate(String date) {
         this.Text = date;
     }
+
     public String getCategory() {
         return Category;
     }
+
     public String getUrl() {
         return Url;
     }
+
     public void setUrl(String url) {
         this.Url = url;
     }

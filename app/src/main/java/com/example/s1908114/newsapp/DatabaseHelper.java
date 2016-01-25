@@ -25,13 +25,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static String DB_PATH_PREFIX = "/data/data/";
     private static String DB_PATH_SUFFIX = "/databases/";
     private static String DB_NAME = "News_db.db";
-
     private SQLiteDatabase myDataBase;
     private final Context myContext;
-    public static String TABLE_NAME = "NewsTable";
-    public static String TABLE_NAME2 = "CapitalTable";
-
-    private static Context sContext;
 
 
     public DatabaseHelper(Context context) {
@@ -39,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, 1);
         this.myContext = context;
     }
-
+    // create the database
     public void createDataBase() throws IOException {
         DB_PATH = DB_PATH_PREFIX + myContext.getPackageName() + DB_PATH_SUFFIX + DB_NAME;
         boolean dbExist = checkDataBase();
@@ -54,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
     }
-
+    // check for database existence
     private boolean checkDataBase() {
         SQLiteDatabase checkDB = null;
         try {
@@ -66,7 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
-
+    //copy the database into path
     private void copyDataBase() throws IOException {
         InputStream assetsDB = myContext.getAssets().open(DB_NAME);
         File directory = new File(DB_PATH);
@@ -74,21 +69,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             directory.mkdir();
         }
         OutputStream dbOutbefore = new FileOutputStream(DB_PATH);
-        Writer dbOut = new OutputStreamWriter( dbOutbefore, "UTF-8");
+        Writer dbOut = new OutputStreamWriter(dbOutbefore, "UTF-8");
         BufferedWriter writer = new BufferedWriter(dbOut);
         byte[] buffer = new byte[1024];
-         int length;
+        int length;
         while ((length = assetsDB.read(buffer)) > 0) {
-            dbOutbefore.write(buffer,0,length);
+            dbOutbefore.write(buffer, 0, length);
 
         }
         writer.flush();
         writer.close();
     }
 
-    public void openDataBase() throws SQLException {
-        myDataBase = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
-    }
+
 
     public SQLiteDatabase getDataBase() throws SQLException {
         myDataBase = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
@@ -109,7 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if(newVersion>oldVersion)
+        if (newVersion > oldVersion)
             try {
                 copyDataBase();
             } catch (IOException e) {

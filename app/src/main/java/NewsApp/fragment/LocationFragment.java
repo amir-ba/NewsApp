@@ -40,19 +40,14 @@ import java.util.ArrayList;
 /**
  * Created by Amir on 04.12.2015.
  */
+//THIS FRAGMENT WILL INITIATE THE LOCATION SHOWER ON THE MAP AND DISAGGREGATION OF THE CLUSTERS
 public class LocationFragment extends Fragment {
 
     SQLiteDatabase database;
     Cursor dbCursor;
     DatabaseHelper dbHelper;
-
-
     private LocationManager locationManager;
-    private String provider;
     private static GoogleMap mMap;
-    private Marker marker;
-
-
     final String[] LOCATION_PERMS = {Manifest.permission.ACCESS_FINE_LOCATION};
     public String query = " SELECT   NewsTable.id, NewsTable.category as category ,NewsTable.headline as headline," +
             " NewsTable.lat as lat ,NewsTable.lon as lon,NewsTable.place, NewsTable.maintext , NewsTable.dates , category ,image \n" +
@@ -61,20 +56,22 @@ public class LocationFragment extends Fragment {
             " or NewsTable.category=? or NewsTable.category=? or NewsTable.category=? or NewsTable.category=?";
     final int LOCATION_REQUEST = 1340;
 
+    // INITIATE
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
+        // CREATE Placeholder view
         View rootView = inflater.inflate(R.layout.text_bubble, container, false);
+        //get the map
         mMap = MainFragment.mMap;
         mMap.setMyLocationEnabled(true);
         mMap.clear();
         CameraUpdateFactory.zoomTo(7);
-
-
+        //define a location listener and use it
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         MainFragment.mClusterManager.setRenderer(new MyclusterRenderer2(getActivity().getApplicationContext(), mMap, MainFragment.mClusterManager));
+        //set a click listener for the markers
         mMap.setOnMarkerClickListener(MainFragment.mClusterManager);
-
+        // request location
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100000, 10, mlocListener);
@@ -87,6 +84,7 @@ public class LocationFragment extends Fragment {
         return rootView;
     }
 
+    // location listener to zoom to the your surrounding and show articles on city level
     private LocationListener mlocListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
@@ -97,20 +95,19 @@ public class LocationFragment extends Fragment {
                 MainFragment.mClusterManager.clearItems();
                 double lat = location.getLatitude();
                 double lng = location.getLongitude();
-
+                // stop listening for location
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.removeUpdates(mlocListener);
                     locationManager = null;
                 }
-
+                // draw a circle around your vicinity
                 Location loc = new Location("L");
                 LatLng latLng = new LatLng(lat, lng);
                 Circle circle = mMap.addCircle(new CircleOptions().center(latLng).radius(20 * 1000).fillColor(Color.parseColor("#3303A9F4")).strokeColor(Color.parseColor("#3303A9F4")));
+                // get the markers for all the cities from database and show them on the map
                 setUpDatabase(query, loc);
+                // zoom to location area
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 7));
-
-                //  System.out.println(lat);
-                //  Toast.makeText(getActivity(), "Location " + lat+","+lng,Toast.LENGTH_SHORT).show();
 
             } else {
                 Toast.makeText(getActivity(), "Location off", Toast.LENGTH_SHORT).show();
@@ -119,6 +116,7 @@ public class LocationFragment extends Fragment {
         }
 
         @Override
+        // alert to activate location if not activated
         public void onProviderDisabled(String provider) {
             Toast.makeText(getActivity(), "Please Enabled your " + provider, Toast.LENGTH_SHORT).show();
 
@@ -126,6 +124,7 @@ public class LocationFragment extends Fragment {
 
 
         @Override
+        //alert when location enabled
         public void onProviderEnabled(String provider) {
             Toast.makeText(getActivity(), "Enabled provider " + provider, Toast.LENGTH_SHORT).show();
 
@@ -135,22 +134,20 @@ public class LocationFragment extends Fragment {
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
             // TODO Auto-generated method stub
-            // new LocationFragment();
         }
 
     };
 
+    // function to query the database and add them to map
     private void setUpDatabase(String qu, Location loc) {
         try {
+            //open the database
             dbHelper = new DatabaseHelper(this.getActivity());
-
             database = dbHelper.getDataBase();
-
+            // query from database
             dbCursor = database.rawQuery(qu, SideBar.MenuFilter);
-            // query(DatabaseHelper.TABLE_NAME,, cols,where,null,null, null, null);
-            //     MenuFilter=null;
             dbCursor.moveToFirst();
-
+            // go through the database add them to clusters
             while (!dbCursor.isAfterLast()) {
                 MyItem m = new MyItem(Double.valueOf(this.dbCursor.getString(3))
                         , Double.valueOf(this.dbCursor.getString(4)),
@@ -164,19 +161,10 @@ public class LocationFragment extends Fragment {
 
                 MainFragment.mClusterManager.addItem(m);
 
-                //   Location mloc= new Location("M");
-                //       mloc.setLongitude(Double.valueOf(m.getLon()));
-                //       mloc.setLatitude(Double.valueOf(m.getLat()));
-                //      float distance = loc.distanceTo(mloc);
-                //      int KM = 200;
-                //      if (distance <= (1000*KM)) {
-//
-                //          MainFragment.mClusterManager.addItem(m);
-                //      }
                 dbCursor.moveToNext();
             }
 
-
+            // close database if not needed
         } finally
 
         {
@@ -184,9 +172,6 @@ public class LocationFragment extends Fragment {
                 dbHelper.close();
             }
         }
-
-
-        //     for (int i = 0; i < markers.size(); i++) {      }
 
 
     }
